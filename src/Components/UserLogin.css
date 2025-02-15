@@ -1,0 +1,94 @@
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .image-section {
+    display: flex;
+    position: absolute;
+    top: 394px;
+  }
+  
+  .left-image {
+    width: 618px;
+    height: 308px;
+  }
+  
+  .right-image {
+    width: 593px;
+    height: 365px;
+    margin-left: 20px;
+  }
+  
+  .login-box {
+    width: 460px;
+    height: 436px;
+    position: absolute;
+    top: 329px;
+    left: 480px;
+    background: #FFF9F2;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .icon {
+    width: 81px;
+    height: 86px;
+    margin-bottom: 10px;
+  }
+  
+  .login-title {
+    color: #003459;
+    font-size: 40px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+  }
+  
+  .label {
+    display: block;
+    text-align: left;
+    color: #310101;
+    font-size: 32px;
+    font-family: 'Orelega One', cursive;
+    margin: 10px 0;
+  }
+  
+  .input-field {
+    width: 80%;
+    height: 50px;
+    background: #EFF6FC;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .forgot-password,
+  .register {
+    color: #310101;
+    font-size: 20px;
+    font-family: 'Orelega One', cursive;
+    cursor: pointer;
+  }
+  
+  .sign-in-btn {
+    width: 220px;
+    height: 70px;
+    background: #FAEDCD;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 40px;
+    font-family: 'Passion One', cursive;
+    color: #310101;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .sign-in-btn:hover {
+    background: #E3D5B3;
+  }
+  

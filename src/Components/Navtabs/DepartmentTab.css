@@ -1,0 +1,75 @@
+/* Container */
+.content-box {
+    text-align: center;
+    padding: 20px;
+    margin: 30px auto;
+    width: 80%;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Header Background */
+  
+  
+  /* Titles */
+  .title {
+    /* width: 357px; */
+    width: 50%;
+    height: 87px;
+    background: #293241;
+    border-radius: 50px;
+    margin: 20px auto;
+    text-align: center;
+    color: white;
+    top: -10%;
+    font-size: 40px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    word-wrap: break-word;
+    margin: 20px auto;
+    align-items: center;
+  }
+  
+  /* Icons */
+  .icon {
+    position: relative;
+    width: 96px;
+    height: 49px;
+    display: block;
+    margin: 20px auto;
+    background: #faf0ca;
+    border-radius: 40%;
+    padding: 5px;
+    left: -68%;
+  }
+  
+  .small-icon {
+    position: relative;
+    width: 65px;
+    height: 56px;
+    display: block;
+    margin: 20px auto;
+    background: #faf0ca;
+    border-radius: 40%;
+    padding: 5px;
+    
+  }
+  
+  /* Circle Background */
+  .circle {
+    width: 128px;
+    height: 65px;
+    background: #faf0ca;
+    border-radius: 9999px;
+    margin: 10px auto;
+  }
+  
+  /* Circle Container */
+  .circle-container {
+    width: 128px;
+    height: 65px;
+    position: relative;
+    margin: auto;
+  }
+  
