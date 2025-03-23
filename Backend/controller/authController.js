@@ -1,29 +1,42 @@
-const db = require('../config/db');
-const jwt = require('jsonwebtoken'); // to generate signed token
-const bcrypt = require('bcryptjs'); // to hash password
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const pool = require("../config/db"); // Ensure this is correctly imported
 
-const SECRET_KEY = process.env.SECRET_KEY || 'secret_key';
+const adminLogin = async (req, res) => {
+    try {
+        const { username, password } = req.body;
 
-exports.adminLogin = (req, res) => {
-    const { username, password } = req.body;
-    db.query('SELECT * FROM admin WHERE username = ?', [username]), async (error, results) => {
-        if (err) {
-            return res.status(500).json({ error: err });
+        if (!username || !password) {
+            return res.status(400).json({ message: "Username and password are required" });
         }
-        if (results.length == 0 ) {
-            res.status(401).json({ message: 'Username or Password is incorrect' });
-        } 
-        bcrypt.compare(password, results[0].password, (err, isMatch) => {
-            if (isMatch) {
-                const token = jwt.sign({ id: results[0].id }, SECRET_KEY, {
-                    expiresIn: '2h' });// expires in 1 hours
-                    res.json ({ token });
-                }
-            else {
-                res.status(401).json({ message: 'Invalid Credentials' });
-            }   
-        
+
+        // Fetch admin user from the database
+        const [rows] = await pool.execute("SELECT * FROM admin WHERE username = ?", [username]);
+
+        if (rows.length === 0) {
+            return res.status(401).json({ message: "Invalid username or password" });
+        }
+
+        const adminUser = rows[0];
+
+        // Compare entered password with stored hashed password
+        const isPasswordValid = await bcrypt.compare(password, adminUser.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: "Invalid username or password" });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { adminId: adminUser.id, username: adminUser.username },
+            process.env.JWT_SECRET || "your_secret_key",
+            { expiresIn: "2h" }
+        );
+
+        res.status(200).json({ message: "Login successful", token });
+    } catch (error) {
+        console.error("Admin Login Error:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
-    );
-}
-}
+};
+
+module.exports = { adminLogin };
