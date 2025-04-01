@@ -26,3 +26,26 @@ exports.addBook = async (req, res) => {
         return res.status(500).json({ error: error });
     }
 };
+exports.updateBook = async (req, res) => { 
+    const { ISBN, Title, Author, Publication, Available_Copies, Total_Copies, Category } = req.body;
+    try {
+        const result = await db.query(
+            "UPDATE Book SET Title = ?, Author = ?, Publication = ?, Available_Copies = ?, Total_Copies = ?, Category = ? WHERE ISBN = ?",
+            [Title, Author, Publication, Available_Copies, Total_Copies, Category, ISBN] ,
+            (err, result) => {  
+                if (err) {
+                    console.error("Database Error:", err);
+                    return res.status(500).json({ error: err });
+                }
+                if (result.affectedRows === 0) {
+                    return res.status(404).json({ message: 'Book not found' });
+                }
+                res.json({ message: 'Book updated successfully' });
+            }
+        );
+        res.json({ message: 'Book added successfully', bookId: result.insertId });
+    } catch (error) {
+        console.error("Database Error:", error);
+        return res.status(500).json({ error: error });
+    }
+};
