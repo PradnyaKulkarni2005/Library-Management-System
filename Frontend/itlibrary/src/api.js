@@ -40,3 +40,13 @@ export const addBook = async (formData) => {
         throw error;
     }
 };
+
+export const updateBook = async (formData) => {
+    try {
+        const response = await axiosInstance.post('/book/update', formData)
+        return response.data;
+    } catch (error) {
+        console.error("Update Book API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
