@@ -40,13 +40,23 @@ export const addBook = async (formData) => {
         throw error;
     }
 };
-
+//Update a book
 export const updateBook = async (formData) => {
     try {
         const response = await axiosInstance.post('/book/update', formData)
         return response.data;
     } catch (error) {
         console.error("Update Book API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+// Delete a book
+export const deleteBook = async (bookId) => {
+    try {
+        const response = await axiosInstance.delete(`/book/delete/${bookId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Delete Book API Error:", error.response ? error.response.data : error.message);
         throw error;
     }
 }
