@@ -49,3 +49,27 @@ exports.updateBook = async (req, res) => {
         return res.status(500).json({ error: error });
     }
 };
+//delete book
+exports.deleteBook = async (req, res) => {
+    const { bookId } = req.params;
+    try {
+        const result = await db.query(
+            "DELETE FROM Book WHERE Book_ID = ?",
+            [bookId],
+            (err, result) => {  
+                if (err) {
+                    console.error("Database Error:", err);
+                    return res.status(500).json({ error: err });
+                }
+                if (result.affectedRows === 0) {
+                    return res.status(404).json({ message: 'Book not found' });
+                }
+                res.json({ message: 'Book deleted successfully' });
+            }
+        );
+    } catch (error) {
+        console.error("Database Error:", error);
+        return res.status(500).json({ error: error });
+    }
+}
+
