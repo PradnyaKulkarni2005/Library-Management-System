@@ -121,5 +121,28 @@ exports.issueBook = (req, res) => {
     });
 };
 
+// Return the book
+exports.returnBook = (req, res) => {
+    const {issueId} = req.params;
+    //upadate the issued book table
 
+    db.query("UPDATE IssuedBooks SET Return_Date = NOW() WHERE Issue_ID = ? AND Return_Date IS NULL"), [issueId], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).json({ error: err });
+        }
 
+        if (result.affectedRows === 0) {
+            return res.status(400).json({ message: 'Book not issued or already returned' });
+        }
+
+        // update the available copies in the book table
+        db.query("UPDATE BOOK SET Available_Copies = Available_Copies + 1 WHERE BOOK_ID = (SELECT BOOK_ID FROM IssuedBooks WHERE Issue_ID = ?)", [issueId], (err, result) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).json({ error: err });
+            }
+            res.json({ message: 'Book returned successfully' });
+        });
+    }
+};
