@@ -1,0 +1,28 @@
+.dashboard-wrapper {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #f2f2f2;
+    padding: 1rem;
+    height: 100vh;
+  }
+  
+  .sidebar button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: black;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 2rem;
+  }
+  
