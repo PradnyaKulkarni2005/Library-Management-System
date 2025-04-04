@@ -71,3 +71,13 @@ export const issueBook = async (bookId,userId) => {
         throw error;
     }
 }
+// Return a book
+export const returnBook = async (bookId,userId) => {
+    try {
+        const response = await axiosInstance.post('/book/return', { Book_ID: bookId, User_ID: userId })
+        return response.data;
+    } catch (error) {
+        console.error("Return Book API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
