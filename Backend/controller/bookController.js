@@ -72,4 +72,54 @@ exports.deleteBook = async (req, res) => {
         return res.status(500).json({ error: error });
     }
 }
+// issue book
+exports.issueBook = (req, res) => {
+    const { bookId, userId } = req.body;
+
+    // check if the user exists
+    db.query("SELECT * FROM USERS WHERE USER_ID = ?", [userId], (err, userresult) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).json({ error: err });
+        }
+        if (userresult.length === 0) {
+            return res.status(400).json({ message: 'User does not exist' });
+        }
+
+        // check if the book is available
+        db.query("SELECT Available_Copies FROM BOOK WHERE BOOK_ID = ?", [bookId], (err, bookResults) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).json({ error: err });
+            }
+
+            if (bookResults.length === 0) {
+                return res.status(400).json({ message: 'Book does not exist' });
+            }
+
+            if (bookResults[0].Available_Copies > 0) {
+                // issue the book
+                db.query("INSERT INTO IssuedBooks (BOOK_ID, USER_ID) VALUES (?, ?)", [bookId, userId], (err, result) => {
+                    if (err) {
+                        console.error("Database Error:", err);
+                        return res.status(500).json({ error: err });
+                    }
+
+                    // update the available copies
+                    db.query("UPDATE BOOK SET Available_Copies = Available_Copies - 1 WHERE BOOK_ID = ?", [bookId], (err, result) => {
+                        if (err) {
+                            console.error("Database Error:", err);
+                            return res.status(500).json({ error: err });
+                        }
+                        res.json({ message: 'Book issued successfully' });
+                    });
+                });
+            } else {
+                res.status(400).json({ message: 'Book is not available' });
+            }
+        });
+    });
+};
+
+
 
