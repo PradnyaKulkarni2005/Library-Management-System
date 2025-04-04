@@ -60,3 +60,14 @@ export const deleteBook = async (bookId) => {
         throw error;
     }
 }
+
+// Issue a book
+export const issueBook = async (bookId,userId) => {
+    try {
+        const response = await axiosInstance.post('/book/issue', { Book_ID: bookId, User_ID: userId })
+        return response.data;
+    } catch (error) {
+        console.error("Issue Book API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
