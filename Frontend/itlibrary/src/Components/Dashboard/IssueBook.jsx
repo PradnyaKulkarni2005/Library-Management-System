@@ -25,34 +25,40 @@ export default function IssueBook() {
     const fetchBooks = async () => {
         try {
             const res = await getBooks();
+            console.log("Books response:", res);
             // Only show books with available copies
-            const availableBooks = res.filter(book => book.Available_Copies > 0);
-            setBooks(availableBooks);
+            setBooks(res);
         } catch (error) {
             console.error("Error fetching books:", error);
         }
     };
 
     const handleIssue = async () => {
-        if (!selectedStudent || !selectedBook) {
-            alert("Please select both student and book.");
-            return;
-        }
-
-        try {
-            await issueBook({ studentId: selectedStudent, bookId: selectedBook });
-            alert("Book issued successfully!");
-
-            // Reset form
-            setSelectedStudent('');
-            setSelectedBook('');
-            fetchBooks(); // update available books
-        } catch (error) {
-            console.error("Error issuing book:", error);
-            alert("Failed to issue book.");
-        }
-    };
-
+      console.log("Issue button clicked!");
+      console.log("Selected Student:", selectedStudent);
+      console.log("Selected Book:", selectedBook);
+  
+      if (!selectedStudent || !selectedBook) {
+          alert("Please select both student and book.");
+          return;
+      }
+  
+      try {
+          console.log("Sending API call...");
+          const response = await issueBook(selectedBook, selectedStudent);
+          console.log("API Response:", response);
+  
+          alert("Book issued successfully!");
+  
+          setSelectedStudent('');
+          setSelectedBook('');
+          fetchBooks();
+      } catch (error) {
+          console.error("Error issuing book:", error);
+          alert("Failed to issue book.");
+      }
+  };
+  
     return (
         <div className="issue-book-container">
             <h2>Issue a Book</h2>
@@ -62,7 +68,7 @@ export default function IssueBook() {
                 <select value={selectedStudent} onChange={(e) => setSelectedStudent(e.target.value)}>
                     <option value="">-- Select Student --</option>
                     {students.map((student) => (
-                        <option key={student.Student_ID} value={student.Student_ID}>
+                        <option key={student.PRN} value={student.PRN}>
                             {student.Name}
                         </option>
                     ))}
