@@ -1,93 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import { getBooks, getStudents, issueBook } from '../../api';
-// import './IssueBook.css'; 
+import React, { useState, useEffect } from 'react';
+import { getBooks, issueBook } from '../../api'; // Make sure you have these API functions
 
 export default function IssueBook() {
-    const [students, setStudents] = useState([]);
+    const [prn, setprn] = useState('');
+    const [showBooks, setShowBooks] = useState(false);
     const [books, setBooks] = useState([]);
-    const [selectedStudent, setSelectedStudent] = useState('');
-    const [selectedBook, setSelectedBook] = useState('');
 
     useEffect(() => {
-        fetchStudents();
-        fetchBooks();
-    }, []);
-
-    const fetchStudents = async () => {
-        try {
-            const res = await getStudents(); // Should return array of students
-            setStudents(res);
-        } catch (error) {
-            console.error("Error fetching students:", error);
+        if (showBooks) {
+            fetchBooks();
         }
-    };
+    }, [showBooks]);
 
     const fetchBooks = async () => {
         try {
-            const res = await getBooks();
-            console.log("Books response:", res);
-            // Only show books with available copies
-            setBooks(res);
+            const response = await getBooks();
+            setBooks(response);
         } catch (error) {
-            console.error("Error fetching books:", error);
+            console.error("Failed to fetch books:", error);
         }
     };
 
-    const handleIssue = async () => {
-      console.log("Issue button clicked!");
-      console.log("Selected Student:", selectedStudent);
-      console.log("Selected Book:", selectedBook);
-  
-      if (!selectedStudent || !selectedBook) {
-          alert("Please select both student and book.");
-          return;
-      }
-  
-      try {
-          console.log("Sending API call...");
-          const response = await issueBook(selectedBook, selectedStudent);
-          console.log("API Response:", response);
-  
-          alert("Book issued successfully!");
-  
-          setSelectedStudent('');
-          setSelectedBook('');
-          fetchBooks();
-      } catch (error) {
-          console.error("Error issuing book:", error);
-          alert("Failed to issue book.");
-      }
-  };
-  
+    const handleIssue = async (bookId) => {
+        if (!prn) {
+            alert("Please enter student roll number.");
+            return;
+        }
+
+        try {
+            await issueBook(prn, bookId); // Make sure API matches this
+            alert(`Book ID ${bookId} issued to PRN No ${prn}`);
+            setShowBooks(false); // Hide book list after issue
+        } catch (error) {
+            const msg = error.response?.data?.message || "Failed to issue book.";
+            alert(msg);
+            
+        }
+    };
+
     return (
-        <div className="issue-book-container">
+        <div className="issue-container">
             <h2>Issue a Book</h2>
-
-            <div className="form-group">
-                <label>Select Student:</label>
-                <select value={selectedStudent} onChange={(e) => setSelectedStudent(e.target.value)}>
-                    <option value="">-- Select Student --</option>
-                    {students.map((student) => (
-                        <option key={student.PRN} value={student.PRN}>
-                            {student.Name}
-                        </option>
-                    ))}
-                </select>
+            
+            <div>
+                <label>Enter Student PRN:</label>
+                <input 
+                    type="text" 
+                    value={prn} 
+                    onChange={(e) => setprn(e.target.value)} 
+                    placeholder="Eg. 123B1F001"
+                />
             </div>
 
-            <div className="form-group">
-                <label>Select Book:</label>
-                <select value={selectedBook} onChange={(e) => setSelectedBook(e.target.value)}>
-                    <option value="">-- Select Book --</option>
-                    {books.map((book) => (
-                        <option key={book.Book_ID} value={book.Book_ID}>
-                            {book.Title} by {book.Author}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <button onClick={() => setShowBooks(!showBooks)}>
+                {showBooks ? "Hide Book List" : "Select Book"}
+            </button>
 
-            <button onClick={handleIssue}>Issue Book</button>
+            {showBooks && (
+                <div className="book-table">
+                    <h3>Available Books</h3>
+                    <table border="1" cellPadding="10">
+                        <thead>
+                            <tr>
+                                <th>Book ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th>Issue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {books.map(book => (
+                                <tr key={book.Book_ID}>
+                                    <td>{book.Book_ID}</td>
+                                    <td>{book.Title}</td>
+                                    <td>{book.Author}</td>
+                                    <td>{book.Category}</td>
+                                    <td>
+                                        <button onClick={() => handleIssue(book.Book_ID)}>Issue</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 }
