@@ -16,5 +16,5 @@ router.post("/return/:issueId", returnBook);
 // Fetch Issued Books by PRN route
 router.get("/issued/:prn", fetchIssuedBooksByPrn);
 // Get Most Issued Books route
-router.get('/book/most-issued', getMostIssuedBooks);
+router.get('/mostissued', getMostIssuedBooks);
 module.exports = router;
