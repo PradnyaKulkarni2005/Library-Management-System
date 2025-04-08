@@ -159,23 +159,24 @@ exports.fetchIssuedBooksByPrn = async (req, res) => {
     }
 };
 //most issued books 
-exports.getMostIssuedBooks = (req, res) => {
+exports.getMostIssuedBooks = async(req, res) => {
+    console.log("Fetching most issued books..."); // Debugging line
     const query = `
         SELECT b.Book_ID, b.Title, b.Author, COUNT(ib.Book_ID) AS issue_count
-        FROM IssuedBook ib
+        FROM IssuedBooks ib
         JOIN Book b ON ib.Book_ID = b.Book_ID
         GROUP BY ib.Book_ID
         ORDER BY issue_count DESC
         LIMIT 10;
     `;
 
-    db.query(query, (err, result) => {
-        if (err) {
-            console.error("Error fetching most issued books:", err);
-            return res.status(500).json({ error: "Internal server error" });
-        }
-
+    try {
+        const [result] = await db.query(query); // Use promise-based query
+        console.log("Most issued books:", result); // Debugging line
         res.json(result);
-    });
+    } catch (error) {
+        console.error("Error fetching most issued books:", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
 };
 
