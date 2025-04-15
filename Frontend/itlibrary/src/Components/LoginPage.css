@@ -1,23 +1,28 @@
 /* LoginPage.css */
 
-  
+/* Center the login container */
 .logincontainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
+  height: 100vh;  /* Ensure the container takes the full height of the viewport */
+  margin: 0; /* Remove any default margin */
+  background-color: #f4f7fc; /* Light background color */
 }
 
+/* Login Box Styling */
 .login-box {
   display: flex;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 80%;
+  width: 100%;
   max-width: 900px;
+  height: 80%; /* Adjust height for better spacing */
 }
 
+/* Image Container */
 .image-container {
   flex: 1;
   display: flex;
@@ -32,48 +37,59 @@
   height: auto;
 }
 
+/* Form Container */
 .form-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
   background-color: #fff;
+  box-sizing: border-box;  /* Ensure padding doesn't affect the width */
 }
 
+/* Logo */
 .logo {
-  width: 80px;
+  width: 100px;
   margin-bottom: 20px;
 }
 
+/* Input Fields */
 .input-field {
   width: 80%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 12px;
+  margin: 12px 0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;  /* Prevent padding from affecting width */
 }
 
+/* Login Button */
 .login-button {
   width: 80%;
-  padding: 10px;
+  padding: 12px;
   background-color: #1d4ed8;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 .login-button:hover {
   background-color: #153db3;
 }
+
+/* Links (Forgot Password & Register) */
 .forgot-password, .register-link {
-  color: #4b3621;
+  color: #1d4ed8;
   text-decoration: none;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif;
+  margin-top: 12px;
 }
 
 .forgot-password:hover, .register-link:hover {
@@ -86,6 +102,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    height: auto; /* Allow box to adjust height on smaller screens */
   }
 
   .image-container {
@@ -94,5 +111,14 @@
 
   .form-container {
     width: 100%;
+    padding: 20px;
+  }
+
+  .input-field {
+    width: 90%; /* Make inputs wider on mobile */
+  }
+
+  .login-button {
+    width: 90%; /* Make the button wider on mobile */
   }
 }

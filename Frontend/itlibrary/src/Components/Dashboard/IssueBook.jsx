@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks, issueBook } from '../../api'; // Make sure you have these API functions
+import { getBooks, issueBook } from '../../api';
+import './IssueBook.css';
 
 export default function IssueBook() {
     const [prn, setprn] = useState('');
@@ -23,50 +24,54 @@ export default function IssueBook() {
 
     const handleIssue = async (bookId) => {
         if (!prn) {
-            alert("Please enter student roll number.");
+            alert("Please enter student PRN number.");
             return;
         }
 
         try {
-            await issueBook(prn, bookId); // Make sure API matches this
+            await issueBook(prn, bookId);
             alert(`Book ID ${bookId} issued to PRN No ${prn}`);
-            setShowBooks(false); // Hide book list after issue
+            setShowBooks(false);
         } catch (error) {
             const msg = error.response?.data?.message || "Failed to issue book.";
             alert(msg);
-            
         }
     };
 
     return (
-        <div className="issue-container">
-            <h2>Issue a Book</h2>
-            
-            <div>
-                <label>Enter Student PRN:</label>
+        <div className="issue-book-container">
+            <h2 className="issue-title">Issue a Book</h2>
+
+            <div className="prn-input-group">
+                <label htmlFor="prn">Enter Student PRN:</label>
                 <input 
                     type="text" 
+                    id="prn"
                     value={prn} 
                     onChange={(e) => setprn(e.target.value)} 
                     placeholder="Eg. 123B1F001"
+                    className="prn-input"
                 />
             </div>
 
-            <button onClick={() => setShowBooks(!showBooks)}>
+            <button 
+                onClick={() => setShowBooks(!showBooks)} 
+                className="toggle-book-btn"
+            >
                 {showBooks ? "Hide Book List" : "Select Book"}
             </button>
 
             {showBooks && (
-                <div className="book-table">
-                    <h3>Available Books</h3>
-                    <table border="1" cellPadding="10">
+                <div className="book-table-container">
+                    <h3 className="book-table-title">Available Books</h3>
+                    <table className="book-table">
                         <thead>
                             <tr>
                                 <th>Book ID</th>
                                 <th>Title</th>
                                 <th>Author</th>
                                 <th>Category</th>
-                                <th>Issue</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,7 +82,12 @@ export default function IssueBook() {
                                     <td>{book.Author}</td>
                                     <td>{book.Category}</td>
                                     <td>
-                                        <button onClick={() => handleIssue(book.Book_ID)}>Issue</button>
+                                        <button 
+                                            className="issue-btn"
+                                            onClick={() => handleIssue(book.Book_ID)}
+                                        >
+                                            Issue
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

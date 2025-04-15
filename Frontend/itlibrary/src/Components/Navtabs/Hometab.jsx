@@ -10,9 +10,9 @@ export default function Hometab() {
           <div className="card-title">ADMIN</div>
         </div>
 
-        <div className="card user-card" onClick={()=>{navigate ('/userlogin')}}>
-          <img className="card-icon" src="https://i.imgur.com/B5Qk7xC.png" alt="User Icon" />
-          <div className="card-title">USER</div>
+        <div>
+          <img  src="https://media.istockphoto.com/id/944631208/photo/education-concept-with-book-in-library.jpg?s=612x612&w=0&k=20&c=uJF-uOU5MRR-iwXqJEPAdXeaH-VJ-nqt6TdKUpEdEkk=" className="right-image" alt="User Icon" />
+          
         </div>
       </div>
       

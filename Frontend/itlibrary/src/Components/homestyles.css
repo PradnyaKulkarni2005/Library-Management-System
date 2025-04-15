@@ -113,11 +113,14 @@
   }
   /* Admin & User Sections */
   .admin-user-section {
+    position: relative;
     display: flex;
     justify-content: space-around;
     position: absolute;
     width: 100%;
     top: 400px;
+    
+    gap: 5px;
   }
   
   .card {
@@ -152,7 +155,54 @@
     top: 140%;
     background: linear-gradient(180deg, #3BC1DA 0%, #1976D2 100%);
   }
-  
+  /* Hometab container */
+.hometab-container {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  height: 100vh; /* Full height of the viewport */
+  padding: 20px;
+}
+
+
+/* Admin Card Styling */
+.admin-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+}
+
+/* Admin Icon Styling */
+.card-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card-icon:hover {
+  transform: scale(1.1); /* Hover effect to enlarge the image */
+}
+
+/* Card Title Styling */
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.right-image {
+  max-width: 400px; /* Limit the image width */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+}
+
   /* Responsive Design */
   @media (max-width: 1024px) {
     .college-name {

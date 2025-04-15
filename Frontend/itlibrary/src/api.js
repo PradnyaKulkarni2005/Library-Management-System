@@ -62,22 +62,69 @@ export const deleteBook = async (bookId) => {
 }
 
 // Issue a book
-export const issueBook = async (bookId,userId) => {
+export const issueBook = async (prn, bookId) => {
     try {
-        const response = await axiosInstance.post('/book/issue', { Book_ID: bookId, User_ID: userId })
+        const response = await axiosInstance.post('/book/issue', {
+            bookId: bookId, // ✅ change key from Book_ID to bookId
+            prn: prn
+        });
+        console.log("Backend response:", response.data);
         return response.data;
     } catch (error) {
         console.error("Issue Book API Error:", error.response ? error.response.data : error.message);
         throw error;
     }
-}
-// Return a book
-export const returnBook = async (bookId,userId) => {
+};
+// Fetch issued books by PRN
+export const fetchIssuedBooksByPrn = async (prn) => {
+    console.log("API call to fetch issued books for PRN:", prn); 
     try {
-        const response = await axiosInstance.post('/book/return', { Book_ID: bookId, User_ID: userId })
+        const response = await axiosInstance.get(`/book/issued/${prn}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching issued books by PRN:", error.response?.data || error.message);
+        throw error;
+    }
+};
+// Return a book
+export const returnBook = async (issueId) => {
+    try {
+        const response = await axiosInstance.post(`/book/return/${issueId}`);
         return response.data;
     } catch (error) {
         console.error("Return Book API Error:", error.response ? error.response.data : error.message);
         throw error;
     }
-}
+};
+// Get all students
+export const getStudents = async () => {
+    try {
+        const response = await axiosInstance.get('/student/get');
+        return response.data;
+    } catch (error) {
+        console.error("Get Students API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+//add student
+export const addStudent = async (student) => {
+    try {
+        const response = await axiosInstance.post('/student/add', student);
+        return response.data;
+    }
+    catch (error) {
+        console.error("Add Student API Error:", error.response ? error.response.data : error.message);
+        throw error;
+        }
+        }
+//most issued books
+export const getMostIssuedBooks = async () => {
+    try {
+        console.log("Fetching most issued books...");
+        const response = await axiosInstance.get('/book/mostissued'); // Use axiosInstance
+        return response.data;
+    } catch (error) {
+        console.error("Most Issued Books API Error:", error.response?.data || error.message);
+        throw error;
+    }
+};

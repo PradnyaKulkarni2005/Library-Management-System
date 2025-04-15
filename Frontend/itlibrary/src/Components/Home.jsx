@@ -68,8 +68,7 @@ const Home = () => {
       {/* Dynamic Content Section */}
       {renderContent()}
 
-      {/* Footer */}
-      <footer className="footer"></footer>
+      
     </div>
   );
 };

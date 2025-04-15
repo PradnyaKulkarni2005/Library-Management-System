@@ -1,0 +1,62 @@
+/* Hometab container */
+.hometab-container {
+    display: flex;
+    justify-content: space-between; /* Align the two sections side by side */
+    padding: 20px;
+  }
+  
+  /* Admin User Section */
+  .admin-user-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Vertically align items in the center */
+    width: 100%;
+    margin: auto;
+  }
+  
+  /* Admin Box Styling */
+  .admin-box {
+    display: flex;
+    gap: 40px; /* Adds spacing between admin box and image */
+  }
+  
+  .admin-card {
+    margin-right: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .card-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .card-icon:hover {
+    transform: scale(1.1); /* Hover effect to enlarge the image */
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Image Section Styling */
+  .image-container {
+    flex: 1;
+  }
+  
+  .right-image {
+    width: 100%;
+    max-width: 400px; /* Limit the image width */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  

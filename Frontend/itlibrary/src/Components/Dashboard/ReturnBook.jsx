@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { fetchIssuedBooksByPrn, returnBook } from '../../api'; // Ensure this is correctly defined
+import { fetchIssuedBooksByPrn, returnBook } from '../../api';
+import './ReturnBook.css'; // Link your CSS file here
 
 export default function ReturnBook() {
     const [prn, setPrn] = useState('');
@@ -15,7 +16,6 @@ export default function ReturnBook() {
         try {
             const books = await fetchIssuedBooksByPrn(prn);
             const flatBooks = Array.isArray(books[0]) ? books[0] : books;
-            console.log("Fetched books:", flatBooks);
             setIssuedBooks(flatBooks);
         } catch (error) {
             console.error("Failed to fetch issued books:", error);
@@ -24,12 +24,10 @@ export default function ReturnBook() {
             setLoading(false);
         }
     };
-    
 
     const handleReturn = async (issueId) => {
         if (window.confirm("Confirm return of this book?")) {
             try {
-                console.log("Returning book with Issue ID:", issueId);
                 await returnBook(issueId);
                 alert("Book returned successfully!");
                 setIssuedBooks(prev => prev.filter(book => book.Issue_ID !== issueId));
@@ -43,8 +41,9 @@ export default function ReturnBook() {
     return (
         <div className="return-book-container">
             <h2>Return Issued Books</h2>
-            <div>
-                <input 
+
+            <div className="form-group">
+                <input
                     type="text"
                     value={prn}
                     onChange={(e) => setPrn(e.target.value)}
@@ -56,36 +55,36 @@ export default function ReturnBook() {
             </div>
 
             {issuedBooks.length > 0 && (
-                <table className="book-table">
-                    <thead>
-                        <tr>
-                            <th>Book ID</th>
-                            <th>Title</th>
-                            <th>Issue Date</th>
-                            <th>Return</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {issuedBooks.map((book, index) => {
-    console.log("Book:", book); // Debugging
-    return (
-        <tr key={book.Issue_ID || index}>
-            <td>{book.Book_ID}</td>
-            <td>{book.Title || "N/A"}</td>
-            <td>{book.Issue_Date?.substring(0, 10)}</td>
-            <td>
-                <button onClick={() => handleReturn(book.Issue_ID)}>Return</button>
-            </td>
-        </tr>
-    );
-})}
-
-                    </tbody>
-                </table>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Book ID</th>
+                                <th>Title</th>
+                                <th>Issue Date</th>
+                                <th>Return</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {issuedBooks.map((book, index) => (
+                                <tr key={book.Issue_ID || index}>
+                                    <td>{book.Book_ID}</td>
+                                    <td>{book.Title || "N/A"}</td>
+                                    <td>{book.Issue_Date?.substring(0, 10)}</td>
+                                    <td>
+                                        <button className="return-btn" onClick={() => handleReturn(book.Issue_ID)}>
+                                            Return
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
 
             {issuedBooks.length === 0 && !loading && prn && (
-                <p>No books issued to this PRN.</p>
+                <p className="no-books">No books issued to this PRN.</p>
             )}
         </div>
     );

@@ -35,8 +35,8 @@ const DashboardLayout = () => {
                 <button onClick={() => setActiveTab('available')}>Available Books</button>
                 <button onClick={() => setActiveTab('add')}>Add Book</button>
                 <button onClick={() => setActiveTab('update')}>Update Book</button>
-                <button onClick={() => setActiveTab('issued')}>Issued Books</button>
-                <button onClick={() => setActiveTab('return')}>Books to Return</button>
+                <button onClick={() => setActiveTab('issued')}>Issue Book</button>
+                <button onClick={() => setActiveTab('return')}>Return Book</button>
                 <button onClick={() => setActiveTab('most')}>Most Issued Books</button>
             </aside>
             <main className="main-content">
