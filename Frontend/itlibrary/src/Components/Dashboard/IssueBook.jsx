@@ -6,6 +6,7 @@ export default function IssueBook() {
     const [prn, setprn] = useState('');
     const [showBooks, setShowBooks] = useState(false);
     const [books, setBooks] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
     useEffect(() => {
         if (showBooks) {
@@ -38,6 +39,13 @@ export default function IssueBook() {
         }
     };
 
+    // Filter books based on search query
+    const filteredBooks = books.filter(book =>
+        book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.Author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.Category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="issue-book-container">
             <h2 className="issue-title">Issue a Book</h2>
@@ -63,6 +71,15 @@ export default function IssueBook() {
 
             {showBooks && (
                 <div className="book-table-container">
+                    {/* Search Input */}
+                    <input 
+                        type="text" 
+                        placeholder="Search by Title, Author, or Category" 
+                        value={searchQuery} 
+                        onChange={(e) => setSearchQuery(e.target.value)} 
+                        className="search-input"
+                    />
+
                     <h3 className="book-table-title">Available Books</h3>
                     <table className="book-table">
                         <thead>
@@ -75,7 +92,7 @@ export default function IssueBook() {
                             </tr>
                         </thead>
                         <tbody>
-                            {books.map(book => (
+                            {filteredBooks.map(book => (
                                 <tr key={book.Book_ID}>
                                     <td>{book.Book_ID}</td>
                                     <td>{book.Title}</td>

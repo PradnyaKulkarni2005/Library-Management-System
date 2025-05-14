@@ -180,3 +180,100 @@ exports.getMostIssuedBooks = async(req, res) => {
     }
 };
 
+// GET /api/book/search?title=Harry&author=Rowling&category=Fiction
+exports.searchBooks = async (req, res) => {
+    const { title, author, category, isbn, available } = req.query;
+
+    let conditions = [];
+    let values = [];
+
+    if (title) {
+        conditions.push("Title LIKE ?");
+        values.push(`%${title}%`);
+    }
+    if (author) {
+        conditions.push("Author LIKE ?");
+        values.push(`%${author}%`);
+    }
+    if (category) {
+        conditions.push("Category LIKE ?");
+        values.push(`%${category}%`);
+    }
+    if (isbn) {
+        conditions.push("ISBN = ?");
+        values.push(isbn);
+    }
+    if (available === "true") {
+        conditions.push("Available_Copies > 0");
+    }
+
+    let query = "SELECT * FROM Book";
+    if (conditions.length > 0) {
+        query += " WHERE " + conditions.join(" AND ");
+    }
+
+    try {
+        const [result] = await db.query(query, values);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Search error:", error);
+        res.status(500).json({ error: "Failed to search books" });
+    }
+};
+
+// pending return of the books
+// Get all books not returned and overdue by 15+ days
+exports.getPendingBooks = async (req, res) => {
+    const query = `
+        SELECT 
+            b.Title,
+            b.Category,
+            s.Name AS StudentName,
+            s.prn AS PRN,
+            DATEDIFF(CURDATE(), ib.Issue_Date) AS DaysSinceIssue
+        FROM 
+            IssuedBooks ib
+        JOIN 
+            Book b ON ib.Book_Id = b.Book_ID
+        JOIN 
+            Users s ON ib.prn = s.prn
+        WHERE 
+            ib.Return_Date IS NULL 
+            AND DATEDIFF(CURDATE(), ib.Issue_Date) > 15
+    `;
+
+    try {
+        const [results] = await db.query(query);
+        res.json(results);
+    } catch (err) {
+        console.error("Error fetching overdue books:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+//reminder for the books using email
+exports.getReminderUsers = async (req, res) => {
+    const query = `
+        SELECT 
+            s.Name,
+            s.email,
+            b.Title,
+            DATEDIFF(CURDATE(), ib.Issue_Date) AS DaysSinceIssue
+        FROM 
+            IssuedBooks ib
+        JOIN 
+            Book b ON ib.Book_Id = b.Book_ID
+        JOIN 
+            Users s ON ib.prn = s.prn
+        WHERE 
+            ib.Return_Date IS NULL 
+            AND DATEDIFF(CURDATE(), ib.Issue_Date) > 10
+    `;
+
+    try {
+        const [results] = await db.promise().query(query);
+        res.json(results);
+    } catch (err) {
+        console.error("Error fetching reminder users:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};

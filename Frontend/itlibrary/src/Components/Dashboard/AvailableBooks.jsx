@@ -4,6 +4,7 @@ import './AvailableBooks.css';
 
 export default function AvailableBooks() {
     const [books, setBooks] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
     useEffect(() => {
         fetchBooks();
@@ -30,9 +31,25 @@ export default function AvailableBooks() {
         }
     };
 
+    // Filter books based on search query
+    const filteredBooks = books.filter(book =>
+        book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.Author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.Category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="available-books">
             <h2>Books Available</h2>
+
+            {/* Search Input */}
+            <input 
+                type="text" 
+                placeholder="Search by Title, Author, or Category" 
+                value={searchQuery} 
+                onChange={(e) => setSearchQuery(e.target.value)} 
+            />
+
             <table className="book-table">
                 <thead>
                     <tr>
@@ -44,9 +61,9 @@ export default function AvailableBooks() {
                     </tr>
                 </thead>
                 <tbody>
-                    {books.map(book => (
+                    {filteredBooks.map((book, index) => (
                         <tr key={book.Book_ID}>
-                            <td>{book.Book_ID}</td>
+                            <td>{index + 1}</td> {/* Display Sr.no */}
                             <td>{book.Title}</td>
                             <td>{book.Category}</td>
                             <td>{book.Author}</td>

@@ -7,6 +7,7 @@ import ReturnBook from './ReturnBook';
 import MostIssuedBooks from './MostIssuedBooks';
 import AddStudent from './Student/AddStudent';
 import UpdateStudent from './Student/UpdateStudent';
+import OverdueBooks from './OverdueBooks';
 import './Dashboard.css';
 
 const DashboardLayout = () => {
@@ -30,6 +31,8 @@ const DashboardLayout = () => {
                 return <AddStudent />;
             case 'updatestd':
                 return <UpdateStudent />;
+            case 'pending':
+                return <OverdueBooks />;
             default:
                 return <AvailableBooks />;
         }
@@ -45,8 +48,10 @@ const DashboardLayout = () => {
                 <button onClick={() => setActiveTab('return')}>Return Book</button>
                 <button onClick={() => setActiveTab('addstd')}>Add Student</button>
                 <button onClick={() => setActiveTab('updatestd')}>Update Student Details</button>
-                {/* Add more buttons for other sections as needed */}
+                
                 <button onClick={() => setActiveTab('most')}>Most Issued Books</button>
+                <button onClick={() => setActiveTab('pending')}>Books Pending Return</button>
+
             </aside>
             <main className="main-content">
                 {renderSection()}

@@ -1,5 +1,6 @@
 const express = require('express');
-const { getBooks, addBook,updateBook,deleteBook,issueBook,returnBook,fetchIssuedBooksByPrn,getMostIssuedBooks } = require('../controller/bookController');
+const { getBooks, addBook,updateBook,deleteBook,issueBook,returnBook,fetchIssuedBooksByPrn,
+    getMostIssuedBooks,searchBooks,getPendingBooks } = require('../controller/bookController');
 const router = express.Router();
 // Get Books route
 router.get('/get', getBooks);
@@ -17,4 +18,8 @@ router.post("/return/:issueId", returnBook);
 router.get("/issued/:prn", fetchIssuedBooksByPrn);
 // Get Most Issued Books route
 router.get('/mostissued', getMostIssuedBooks);
+//search book
+router.get('/search', searchBooks);
+//get pending books which are not returned
+router.get('/pending', getPendingBooks);
 module.exports = router;
