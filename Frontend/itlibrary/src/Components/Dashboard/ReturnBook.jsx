@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { fetchIssuedBooksByPrn, returnBook } from '../../api';
-import './ReturnBook.css'; // Link your CSS file here
+import './ReturnBook.css';
 
 export default function ReturnBook() {
     const [prn, setPrn] = useState('');

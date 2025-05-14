@@ -5,6 +5,8 @@ import Editbook from './Editbook';
 import IssuedBooks from './IssueBook';
 import ReturnBook from './ReturnBook';
 import MostIssuedBooks from './MostIssuedBooks';
+import AddStudent from './Student/AddStudent';
+import UpdateStudent from './Student/UpdateStudent';
 import './Dashboard.css';
 
 const DashboardLayout = () => {
@@ -24,6 +26,10 @@ const DashboardLayout = () => {
                 return <ReturnBook />;
             case 'most':
                 return <MostIssuedBooks />;
+            case 'addstd':
+                return <AddStudent />;
+            case 'updatestd':
+                return <UpdateStudent />;
             default:
                 return <AvailableBooks />;
         }
@@ -37,6 +43,9 @@ const DashboardLayout = () => {
                 <button onClick={() => setActiveTab('update')}>Update Book</button>
                 <button onClick={() => setActiveTab('issued')}>Issue Book</button>
                 <button onClick={() => setActiveTab('return')}>Return Book</button>
+                <button onClick={() => setActiveTab('addstd')}>Add Student</button>
+                <button onClick={() => setActiveTab('updatestd')}>Update Student Details</button>
+                {/* Add more buttons for other sections as needed */}
                 <button onClick={() => setActiveTab('most')}>Most Issued Books</button>
             </aside>
             <main className="main-content">

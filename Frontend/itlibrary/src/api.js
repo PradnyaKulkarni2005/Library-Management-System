@@ -117,6 +117,16 @@ export const addStudent = async (student) => {
         throw error;
         }
         }
+//update student
+export const updateStudent = async (student) => {
+    try {
+        const response = await axiosInstance.post('/student/update', student);
+        return response.data;
+    } catch (error) {
+        console.error("Update Student API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
 //most issued books
 export const getMostIssuedBooks = async () => {
     try {
