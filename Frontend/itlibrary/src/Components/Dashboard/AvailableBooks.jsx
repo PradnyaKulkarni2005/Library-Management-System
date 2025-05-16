@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { getBooks, deleteBook } from '../../api'; 
-import './AvailableBooks.css'; 
+import { getBooks, deleteBook } from '../../api';
+import './AvailableBooks.css';
 
 export default function AvailableBooks() {
     const [books, setBooks] = useState([]);
-    const [searchQuery, setSearchQuery] = useState(""); // State for search query
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         fetchBooks();
@@ -31,7 +31,6 @@ export default function AvailableBooks() {
         }
     };
 
-    // Filter books based on search query
     const filteredBooks = books.filter(book =>
         book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         book.Author.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -41,15 +40,12 @@ export default function AvailableBooks() {
     return (
         <div className="available-books">
             <h2>Books Available</h2>
-
-            {/* Search Input */}
-            <input 
-                type="text" 
-                placeholder="Search by Title, Author, or Category" 
-                value={searchQuery} 
-                onChange={(e) => setSearchQuery(e.target.value)} 
+            <input
+                type="text"
+                placeholder="Search by Title, Author, or Category"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
             />
-
             <table className="book-table">
                 <thead>
                     <tr>
@@ -63,11 +59,15 @@ export default function AvailableBooks() {
                 <tbody>
                     {filteredBooks.map((book, index) => (
                         <tr key={book.Book_ID}>
-                            <td>{index + 1}</td> {/* Display Sr.no */}
+                            <td>{index + 1}</td>
                             <td>{book.Title}</td>
                             <td>{book.Category}</td>
                             <td>{book.Author}</td>
-                            <td><button onClick={() => handleDelete(book.Book_ID)}>Delete</button></td>
+                            <td>
+                                <button onClick={() => handleDelete(book.Book_ID)}>
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
