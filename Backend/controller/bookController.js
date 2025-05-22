@@ -167,7 +167,7 @@ exports.getMostIssuedBooks = async(req, res) => {
         JOIN Book b ON ib.Book_ID = b.Book_ID
         GROUP BY ib.Book_ID
         ORDER BY issue_count DESC
-        LIMIT 10;
+        LIMIT 5;
     `;
 
     try {
@@ -275,5 +275,33 @@ exports.getReminderUsers = async (req, res) => {
     } catch (err) {
         console.error("Error fetching reminder users:", err);
         res.status(500).json({ message: "Internal server error" });
+    }
+};
+//analysis of available and issued books
+exports.getBookStatusCounts = async (req, res) => {
+    const query = `
+        SELECT 'Available' AS status, COUNT(*) AS count
+        FROM Book
+        WHERE Book_ID NOT IN (
+            SELECT Book_ID FROM IssuedBooks WHERE Return_Date IS NULL
+        )
+        UNION ALL
+        SELECT 'Issued' AS status, COUNT(*) AS count
+        FROM IssuedBooks
+        WHERE Return_Date IS NULL
+    `;
+
+    try {
+        const [results] = await db.query(query);  // Destructure if using mysql2 or wrapped db
+        const counts = { Available: 0, Issued: 0 };
+
+        results.forEach(row => {
+            counts[row.status] = row.count;
+        });
+
+        res.json(counts);
+    } catch (error) {
+        console.error("Error fetching book status counts:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };

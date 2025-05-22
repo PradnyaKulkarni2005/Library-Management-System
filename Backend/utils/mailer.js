@@ -3,14 +3,14 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'kulkarnipradnya1245@gmail.com',
-        pass: 'yvoc honu giwc uqss'
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD
     }
 });
 
 const sendMail = async (to, subject, text) => {
     const mailOptions = {
-        from: 'kulkarnipradnya1245@gmail.com', // Must match Gmail user
+        from: process.env.MAIL_USER, // Must match Gmail user
         to,
         subject,
         text

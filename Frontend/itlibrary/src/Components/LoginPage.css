@@ -7,13 +7,13 @@
   align-items: center;
   height: 100vh;  /* Ensure the container takes the full height of the viewport */
   margin: 0; /* Remove any default margin */
-  background-color: #f4f7fc; /* Light background color */
+  background-color: #fff; /* Light background color */
 }
 
 /* Login Box Styling */
 .login-box {
   display: flex;
-  background: white;
+  background: #f2e7af;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -45,7 +45,7 @@
   justify-content: center;
   align-items: center;
   padding: 40px;
-  background-color: #fff;
+  background-color: #f2e7af;
   box-sizing: border-box;  /* Ensure padding doesn't affect the width */
 }
 
@@ -61,6 +61,7 @@
   padding: 12px;
   margin: 12px 0;
   border: 1px solid #ccc;
+  background-color: rgb(213, 228, 223);
   border-radius: 8px;
   font-size: 16px;
   box-sizing: border-box;  /* Prevent padding from affecting width */
@@ -70,17 +71,18 @@
 .login-button {
   width: 80%;
   padding: 12px;
-  background-color: #1d4ed8;
+  background-color: #4d040e;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: bold;
   transition: background-color 0.3s;
 }
 
 .login-button:hover {
-  background-color: #153db3;
+  background-color: #100101;
 }
 
 /* Links (Forgot Password & Register) */

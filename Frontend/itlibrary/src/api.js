@@ -148,3 +148,14 @@ export const getPendingBooks = async () => {
         throw error;
     }
 }
+//book status counts
+export const getBookStatusCounts = async () => {
+    try {
+        const response = await axiosInstance.get('/book/status');
+        return response.data;
+    } catch (error) {   
+        console.error("Get Book Status Counts API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+

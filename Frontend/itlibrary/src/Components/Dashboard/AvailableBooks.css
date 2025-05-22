@@ -67,6 +67,26 @@
 .book-table td button:hover {
     background-color: #c82333; /* Darker red on hover */
 }
+/* SearchInput.css */
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.search-input:focus {
+  border-color: #4b0082;
+  box-shadow: 0 0 8px rgba(75, 0, 130, 0.2);
+  background-color: #fff;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {

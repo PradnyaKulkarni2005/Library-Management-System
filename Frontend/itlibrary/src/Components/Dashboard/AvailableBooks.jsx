@@ -41,7 +41,7 @@ export default function AvailableBooks() {
         <div className="available-books">
             <h2>Books Available</h2>
             <input
-                type="text"
+                type="text" className="search-input"
                 placeholder="Search by Title, Author, or Category"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
