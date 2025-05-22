@@ -3,7 +3,7 @@ const db = require('../config/db');
 // Handling the get request for books
 exports.getBooks = async (req, res) => {
     try {
-        const [result] = await db.query('SELECT * FROM Book');
+        const [result] = await db.query('SELECT * FROM book');
         console.log("Fetched Books:", result); // Debugging line
         res.json(result);
     } catch (error) {
@@ -17,7 +17,7 @@ exports.addBook = async (req, res) => {
     const { ISBN, Title, Author, Publication, Available_Copies, Total_Copies, Category } = req.body;
     try {
         const result = await db.query(
-            "INSERT INTO Book (ISBN, Title, Author, Publication, Available_Copies, Total_Copies, Category) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+            "INSERT INTO book (ISBN, Title, Author, Publication, Available_Copies, Total_Copies, Category) VALUES (?, ?, ?, ?, ?, ?, ?)", 
             [ISBN, Title, Author, Publication, Available_Copies, Total_Copies, Category]
         );
         res.json({ message: 'Book added successfully', bookId: result.insertId });
@@ -30,7 +30,7 @@ exports.updateBook = async (req, res) => {
     const { ISBN, Title, Author, Publication, Available_Copies, Total_Copies, Category } = req.body;
     try {
         const result = await db.query(
-            "UPDATE Book SET Title = ?, Author = ?, Publication = ?, Available_Copies = ?, Total_Copies = ?, Category = ? WHERE ISBN = ?",
+            "UPDATE book SET Title = ?, Author = ?, Publication = ?, Available_Copies = ?, Total_Copies = ?, Category = ? WHERE ISBN = ?",
             [Title, Author, Publication, Available_Copies, Total_Copies, Category, ISBN] ,
             (err, result) => {  
                 if (err) {
@@ -54,7 +54,7 @@ exports.deleteBook = async (req, res) => {
     const { bookId } = req.params;
     try {
         const result = await db.query(
-            "DELETE FROM Book WHERE Book_ID = ?",
+            "DELETE FROM book WHERE Book_ID = ?",
             [bookId],
             (err, result) => {  
                 if (err) {
@@ -87,7 +87,7 @@ exports.issueBook = async (req, res) => {
         }
 
         // 2. Check if book is available
-        const [bookResults] = await db.query("SELECT Available_Copies FROM BOOK WHERE BOOK_ID = ?", [bookId]);
+        const [bookResults] = await db.query("SELECT Available_Copies FROM book WHERE BOOK_ID = ?", [bookId]);
 
         if (bookResults.length === 0) {
             return res.status(400).json({ message: 'Book does not exist' });
@@ -98,10 +98,10 @@ exports.issueBook = async (req, res) => {
         }
 
         // 3. Issue the book
-        await db.query("INSERT INTO IssuedBooks (BOOK_ID,prn) VALUES (?, ?)", [bookId, prn]);
+        await db.query("INSERT INTO issuedbooks (BOOK_ID,prn) VALUES (?, ?)", [bookId, prn]);
 
         // 4. Update available copies
-        await db.query("UPDATE BOOK SET Available_Copies = Available_Copies - 1 WHERE BOOK_ID = ?", [bookId]);
+        await db.query("UPDATE book SET Available_Copies = Available_Copies - 1 WHERE BOOK_ID = ?", [bookId]);
 
         return res.json({ message: 'Book issued successfully' });
 
@@ -117,7 +117,7 @@ exports.returnBook = (req, res) => {
     const { issueId } = req.params;
 
     // Update the IssuedBooks table to set the Return_Date
-    db.query("UPDATE IssuedBooks SET Return_Date = NOW() WHERE Issue_ID = ? AND Return_Date IS NULL", [issueId], (err, result) => {
+    db.query("UPDATE issuedbooks SET Return_Date = NOW() WHERE Issue_ID = ? AND Return_Date IS NULL", [issueId], (err, result) => {
         if (err) {
             console.error("Database Error:", err);
             return res.status(500).json({ error: err });
@@ -128,7 +128,7 @@ exports.returnBook = (req, res) => {
         }
 
         // Update the available copies in the Book table
-        db.query("UPDATE BOOK SET Available_Copies = Available_Copies + 1 WHERE BOOK_ID = (SELECT BOOK_ID FROM IssuedBooks WHERE Issue_ID = ?)", [issueId], (err, result) => {
+        db.query("UPDATE book SET Available_Copies = Available_Copies + 1 WHERE BOOK_ID = (SELECT BOOK_ID FROM issuedbooks WHERE Issue_ID = ?)", [issueId], (err, result) => {
             if (err) {
                 console.error("Database Error:", err);
                 return res.status(500).json({ error: err });
@@ -144,8 +144,8 @@ exports.fetchIssuedBooksByPrn = async (req, res) => {
 
     const query = `
         SELECT ib.Issue_ID, ib.Book_ID, b.Title, b.Author, ib.Issue_Date
-        FROM IssuedBooks ib
-        JOIN Book b ON ib.Book_ID = b.Book_ID
+        FROM issuedbooks ib
+        JOIN book b ON ib.Book_ID = b.Book_ID
         WHERE ib.prn = ? AND ib.Return_Date IS NULL
     `;
 
@@ -163,8 +163,8 @@ exports.getMostIssuedBooks = async(req, res) => {
     console.log("Fetching most issued books..."); // Debugging line
     const query = `
         SELECT b.Book_ID, b.Title, b.Author, COUNT(ib.Book_ID) AS issue_count
-        FROM IssuedBooks ib
-        JOIN Book b ON ib.Book_ID = b.Book_ID
+        FROM issuedbooks ib
+        JOIN book b ON ib.Book_ID = b.Book_ID
         GROUP BY ib.Book_ID
         ORDER BY issue_count DESC
         LIMIT 5;
@@ -207,7 +207,7 @@ exports.searchBooks = async (req, res) => {
         conditions.push("Available_Copies > 0");
     }
 
-    let query = "SELECT * FROM Book";
+    let query = "SELECT * FROM book";
     if (conditions.length > 0) {
         query += " WHERE " + conditions.join(" AND ");
     }
@@ -232,11 +232,11 @@ exports.getPendingBooks = async (req, res) => {
             s.prn AS PRN,
             DATEDIFF(CURDATE(), ib.Issue_Date) AS DaysSinceIssue
         FROM 
-            IssuedBooks ib
+            issuedbooks ib
         JOIN 
-            Book b ON ib.Book_Id = b.Book_ID
+            book b ON ib.Book_Id = b.Book_ID
         JOIN 
-            Users s ON ib.prn = s.prn
+            users s ON ib.prn = s.prn
         WHERE 
             ib.Return_Date IS NULL 
             AND DATEDIFF(CURDATE(), ib.Issue_Date) > 15
@@ -259,11 +259,11 @@ exports.getReminderUsers = async (req, res) => {
             b.Title,
             DATEDIFF(CURDATE(), ib.Issue_Date) AS DaysSinceIssue
         FROM 
-            IssuedBooks ib
+            issuedbooks ib
         JOIN 
-            Book b ON ib.Book_Id = b.Book_ID
+            book b ON ib.Book_Id = b.Book_ID
         JOIN 
-            Users s ON ib.prn = s.prn
+            users s ON ib.prn = s.prn
         WHERE 
             ib.Return_Date IS NULL 
             AND DATEDIFF(CURDATE(), ib.Issue_Date) > 10
@@ -281,13 +281,13 @@ exports.getReminderUsers = async (req, res) => {
 exports.getBookStatusCounts = async (req, res) => {
     const query = `
         SELECT 'Available' AS status, COUNT(*) AS count
-        FROM Book
+        FROM book
         WHERE Book_ID NOT IN (
-            SELECT Book_ID FROM IssuedBooks WHERE Return_Date IS NULL
+            SELECT Book_ID FROM issuedbooks WHERE Return_Date IS NULL
         )
         UNION ALL
         SELECT 'Issued' AS status, COUNT(*) AS count
-        FROM IssuedBooks
+        FROM issuedbooks
         WHERE Return_Date IS NULL
     `;
 
