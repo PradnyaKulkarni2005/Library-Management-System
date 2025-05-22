@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt.js");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db"); // Ensure this is correctly imported
 
