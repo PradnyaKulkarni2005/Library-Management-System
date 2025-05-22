@@ -3,7 +3,7 @@ const db = require('../config/db');
 // ✅ Get all students (using async/await)
 exports.getStudents = async (req, res) => {
     try {
-        const [results] = await db.query('SELECT * FROM Users');
+        const [results] = await db.query('SELECT * FROM users');
         res.json(results); 
     } catch (err) {
         console.error("Database Error:", err);
@@ -17,7 +17,7 @@ exports.addStudent = async (req, res) => {
     const { Name, PRN, Department, Email } = req.body;
 
     try {
-        const [result] = await db.query('INSERT INTO Users SET ?', {
+        const [result] = await db.query('INSERT INTO users SET ?', {
             Name,
             PRN,
             Department,
@@ -34,7 +34,7 @@ exports.updateStudent = async (req, res) => {
     const { Name, PRN, Department, Email } = req.body;
 
     try {
-        const [result] = await db.query('UPDATE Users SET ? WHERE PRN = ?', [
+        const [result] = await db.query('UPDATE users SET ? WHERE PRN = ?', [
             { Name, Department, Email },
             PRN
         ]);
@@ -53,7 +53,7 @@ exports.deleteStudent = async (req, res) => {
     const { PRN } = req.params;
 
     try {
-        const [result] = await db.query('DELETE FROM Users WHERE PRN = ?', [PRN]);
+        const [result] = await db.query('DELETE FROM users WHERE PRN = ?', [PRN]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Student not found' });
         }
