@@ -80,7 +80,7 @@ exports.issueBook = async (req, res) => {
         // 1. Check if user exists
         console.log("PRN:", prn); // Debugging line
         console.log("Book ID:", bookId); // Debugging line
-        const [userResult] = await db.query("SELECT * FROM Users WHERE prn = ?", [prn]);
+        const [userResult] = await db.query("SELECT * FROM users WHERE prn = ?", [prn]);
         console.log("User Result:", userResult); // Debugging line
         if (userResult.length === 0) {
             return res.status(400).json({ message: 'User does not exist' });
