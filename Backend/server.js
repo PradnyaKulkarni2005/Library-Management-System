@@ -13,8 +13,7 @@ const app = express();
 // ✅ CORS Configuration
 const allowedOrigins = [
   'http://localhost:3000', // For local development
-  'https://library-management-system-umber-six.vercel.app/' // Replace with your actual Vercel frontend domain
-];
+  'https://library-management-system-umber-six.vercel.app' ];
 
 app.use(cors({
   origin: function (origin, callback) {
