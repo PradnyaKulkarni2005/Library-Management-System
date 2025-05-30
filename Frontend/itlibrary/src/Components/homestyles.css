@@ -1,171 +1,186 @@
 /* General styles */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
-  
-  .container {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    background: white;
-  }
-  
-  /* Top bar */
-  .top-bar {
-    width: 100%;
-    height: 44px;
-    background: #3BC1DA;
-  }
-  
-  /* Logos */
-  .logo {
-    position: absolute;
-    width: 70px;
-    height: auto;
-  }
-  
-  .logo1 {
-    left: 1%;
-    top: 70px;
-  }
-  
-  .logo2 {
-    left: 8%;
-    top: 73px;
-  }
-  
-  .logo3 {
-    right: 4%;
-    top: 80px;
-  }
-  
-  /* College Name */
-  .college-name {
-    position: absolute;
-    width: 70%;
-    left: 50%;
-    top: 100px;
-    transform: translateX(-50%);
-    color: #2162AD;
-    font-size: 2.2rem;
-    font-weight: 700;
-    text-align: center;
-  }
-  
-  .education-trust {
-    position: absolute;
-    width: 60%;
-    left: 50%;
-    top: 70px;
-    transform: translateX(-50%);
-    color: #2162AD;
-    font-size: 1.5rem;
-    font-weight: 800;
-    text-align: center;
-  }
-  
-  /* Accreditation */
-  .accreditation {
-    position: absolute;
-    width: 80%;
-    left: 50%;
-    top: 170px;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 1.2rem;
-    font-style: italic;
-    font-weight: 400;
-    color: black;
-  }
-  
-  .bold {
-    font-weight: 700;
-  }
-  
-  /* Navigation Bar */
-  .navbar {
-    position: absolute;
-    width: 100%;
-    top: 260px;
-    height: 47px;
-    background: #EAFDFF;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  .nav-item {
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-align: center;
-    color: black;
-    
-  }
-  a{
-    text-decoration: none;
-  }
-  a :hover{
-    background-color: white;
-    color: #0d5eaf;
-  }
-  /* Admin & User Sections */
-  .admin-user-section {
-    position: relative;
-    display: flex;
-    justify-content: space-around;
-    position: absolute;
-    width: 100%;
-    top: 400px;
-    
-    gap: 5px;
-  }
-  
-  .card {
-    width: 250px;
-    height: 150px;
-    background: radial-gradient(circle, #C7EDE4 0%, #91EAE8 100%);
-    border-radius: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .card-icon {
-    width: 80px;
-    height: auto;
-  }
-  
-  .card-title {
-    color: #003459;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-top: 10px;
-  }
-  
-  /* Footer */
-  .footer {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    top: 140%;
-    background: linear-gradient(180deg, #3BC1DA 0%, #1976D2 100%);
-  }
-  /* Hometab container */
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background: white;
+  padding-top: 44px; /* top-bar height */
+}
+
+/* Top bar */
+.top-bar {
+  width: 100%;
+  height: 44px;
+  background: #3BC1DA;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Logos - use flexbox wrapper for better responsiveness */
+.logos-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 80px auto 0 auto;
+  padding: 0 15px;
+  gap: 10px;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.logo1, .logo2, .logo3 {
+  /* Remove absolute positioning */
+}
+
+/* College Name & Education Trust */
+.college-name, .education-trust, .accreditation {
+  max-width: 900px;
+  margin: 10px auto;
+  text-align: center;
+  color: #2162AD;
+  padding: 0 15px;
+}
+
+.college-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.education-trust {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: -10px;
+}
+
+.accreditation {
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 400;
+  color: black;
+  margin-top: 10px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+/* Navigation Bar */
+.navbar {
+  width: 100%;
+  background: #EAFDFF;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 0;
+  position: sticky;
+  top: 44px; /* below top bar */
+  z-index: 999;
+}
+
+.nav-item {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: black;
+  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.nav-item:hover {
+  background-color: #ddd;
+  color: #0d5eaf;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Admin & User Sections */
+.admin-user-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 40px auto 60px auto;
+  padding: 0 15px;
+}
+
+.card {
+  flex: 1 1 250px;
+  max-width: 300px;
+  height: 150px;
+  background: radial-gradient(circle, #C7EDE4 0%, #91EAE8 100%);
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-icon {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card-icon:hover {
+  transform: scale(1.1);
+}
+
+.card-title {
+  color: #003459;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(180deg, #3BC1DA 0%, #1976D2 100%);
+  margin-top: 60px;
+}
+
+/* Hometab container */
 .hometab-container {
   display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  height: 100vh; /* Full height of the viewport */
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  min-height: 60vh;
   padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-
-/* Admin Card Styling */
 .admin-card {
   background-color: #fff;
   border-radius: 8px;
@@ -173,155 +188,150 @@
   padding: 20px;
   text-align: center;
   width: 200px;
-}
-
-/* Admin Icon Styling */
-.card-icon {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 15px;
-  cursor: pointer;
   transition: transform 0.3s ease;
 }
 
-.card-icon:hover {
-  transform: scale(1.1); /* Hover effect to enlarge the image */
-}
-
-/* Card Title Styling */
-.card-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+.admin-card:hover {
+  transform: translateY(-5px);
 }
 
 .right-image {
-  max-width: 400px; /* Limit the image width */
+  max-width: 400px;
+  width: 100%;
   height: auto;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
 }
 
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .college-name {
-      font-size: 1.8rem;
-    }
-  
-    .education-trust {
-      font-size: 1.3rem;
-    }
-  
-    .accreditation {
-      font-size: 1rem;
-    }
-  
-    .nav-item {
-      font-size: 1rem;
-    }
-  
-    .card {
-      width: 200px;
-      height: 130px;
-    }
-  
-    .card-title {
-      font-size: 1.5rem;
-    }
+/* Content box */
+.content-box {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 900px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .college-name {
+    font-size: 1.8rem;
   }
-  
-  @media (max-width: 768px) {
-    .logo {
-      width: 90px;
-    }
-  
-    .college-name {
-      font-size: 1.5rem;
-    }
-  
-    .education-trust {
-      font-size: 1.1rem;
-    }
-  
-    .accreditation {
-      font-size: 0.9rem;
-    }
-  
-    .navbar {
-      flex-direction: column;
-      height: auto;
-      padding: 10px 0;
-    }
-  
-    .nav-item {
-      font-size: 1rem;
-      padding: 5px 0;
-    }
-  
-    .admin-user-section {
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-  
-    .card {
-      width: 180px;
-      height: 120px;
-    }
-  
-    .card-title {
-      font-size: 1.3rem;
-    }
+
+  .education-trust {
+    font-size: 1.3rem;
   }
-  
-  @media (max-width: 480px) {
-    .logo {
-      width: 70px;
-    }
-  
-    .college-name {
-      font-size: 1.2rem;
-    }
-  
-    .education-trust {
-      font-size: 1rem;
-    }
-  
-    .accreditation {
-      font-size: 0.8rem;
-    }
-  
-    .nav-item {
-      font-size: 0.9rem;
-    }
-  
-    .card {
-      width: 160px;
-      height: 110px;
-    }
-  
-    .card-title {
-      font-size: 1.2rem;
-    }
+
+  .accreditation {
+    font-size: 1rem;
   }
-  .content-box {
-    position: relative;
-    text-align: center;
-    padding: 20px;
-    margin: 30px auto;
-    width: 80%;
-    top: 50%;
-    background: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+
   .nav-item {
-    cursor: pointer;
-    padding: 10px 15px;
-    display: inline-block;
+    font-size: 1rem;
   }
-  .nav-item:hover {
-    background-color: #ddd;
+
+  .card {
+    max-width: 250px;
+    height: 140px;
   }
-  
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .logos-wrapper {
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .logo {
+    width: 50px;
+  }
+
+  .college-name {
+    font-size: 1.5rem;
+  }
+
+  .education-trust {
+    font-size: 1.1rem;
+  }
+
+  .accreditation {
+    font-size: 0.9rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px 0;
+  }
+
+  .nav-item {
+    font-size: 1rem;
+    padding: 8px 10px;
+  }
+
+  .admin-user-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .card {
+    width: 220px;
+    height: 130px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .right-image {
+    max-width: 90%;
+    margin: 0 auto 20px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 40px;
+  }
+
+  .college-name {
+    font-size: 1.2rem;
+  }
+
+  .education-trust {
+    font-size: 1rem;
+  }
+
+  .accreditation {
+    font-size: 0.8rem;
+  }
+
+  .nav-item {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+  }
+
+  .card {
+    width: 180px;
+    height: 110px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .content-box {
+    width: 95%;
+    padding: 15px;
+    margin: 20px auto;
+  }
+}
