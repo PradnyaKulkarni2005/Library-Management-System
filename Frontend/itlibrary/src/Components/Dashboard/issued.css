@@ -9,6 +9,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f7f9fd, #e6ecf8);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
 
 .most-issued-heading {
@@ -26,6 +27,7 @@
   width: 100%;
   max-width: 900px;
   transition: transform 0.3s;
+  box-sizing: border-box;
 }
 
 .chart-box:hover {
@@ -36,8 +38,54 @@
   font-size: 18px;
   color: #333;
   margin-top: 30px;
+  text-align: center;
 }
 
 .error-message {
   color: red;
+  text-align: center;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .most-issued-container {
+    padding: 30px 15px;
+  }
+
+  .most-issued-heading {
+    font-size: 24px;
+  }
+
+  .chart-box {
+    padding: 20px;
+  }
+
+  .status-message {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .most-issued-container {
+    padding: 25px 10px;
+  }
+
+  .most-issued-heading {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .chart-box {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .status-message {
+    font-size: 15px;
+  }
+
+  .error-message {
+    font-size: 15px;
+  }
 }
