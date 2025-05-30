@@ -11,7 +11,7 @@ export default function Hometab() {
         </div>
 
         <div>
-          <img  src="https://media.istockphoto.com/id/944631208/photo/education-concept-with-book-in-library.jpg?s=612x612&w=0&k=20&c=uJF-uOU5MRR-iwXqJEPAdXeaH-VJ-nqt6TdKUpEdEkk=" className="right-image" alt="User Icon" />
+          <img src="https://media.istockphoto.com/id/944631208/photo/education-concept-with-book-in-library.jpg?s=612x612&w=0&k=20&c=uJF-uOU5MRR-iwXqJEPAdXeaH-VJ-nqt6TdKUpEdEkk=" className="right-image" alt="User Icon" />
           
         </div>
       </div>
