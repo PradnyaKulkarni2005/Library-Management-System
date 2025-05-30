@@ -1,69 +1,98 @@
 .edit-book-container {
-    max-width: 600px;
-    margin: 3rem auto;
-    padding: 2.5rem;
-    background: linear-gradient(to bottom right, #f9fbff, #e3efff);
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(30, 144, 255, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #003366;
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(to bottom right, #f9fbff, #e3efff);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(30, 144, 255, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #003366;
+  box-sizing: border-box;
+}
+
+.edit-book-title {
+  text-align: center;
+  color: #16538f;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.edit-book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-input {
+  padding: 0.85rem 1rem;
+  border: 1px solid #cce0ff;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+}
+
+.form-input:focus {
+  border-color: #1e90ff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(30, 144, 255, 0.2);
+}
+
+.form-submit-btn {
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #1e90ff, #0077ff);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.form-submit-btn:hover {
+  background: linear-gradient(135deg, #0077ff, #005fcc);
+  transform: translateY(-2px);
+}
+
+/* Tablets and smaller screens */
+@media (max-width: 768px) {
+  .edit-book-container {
+    padding: 2rem;
+    margin: 2.5rem 1.5rem;
   }
-  
+
   .edit-book-title {
-    text-align: center;
-    color: #16538f;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
+    font-size: 1.6rem;
   }
-  
-  .edit-book-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-  
-  .form-input {
-    padding: 0.85rem 1rem;
-    border: 1px solid #cce0ff;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background-color: #ffffff;
-  }
-  
-  .form-input:focus {
-    border-color: #1e90ff;
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(30, 144, 255, 0.2);
-  }
-  
+
+  .form-input,
   .form-submit-btn {
-    padding: 0.9rem;
-    background: linear-gradient(135deg, #1e90ff, #0077ff);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.05rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 0.95rem;
+    padding: 0.75rem 0.9rem;
   }
-  
-  .form-submit-btn:hover {
-    background: linear-gradient(135deg, #0077ff, #005fcc);
-    transform: translateY(-2px);
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .edit-book-container {
+    padding: 1.5rem;
+    margin: 2rem 1rem;
   }
-  
-  @media (max-width: 600px) {
-    .edit-book-container {
-      padding: 1.5rem;
-      margin: 2rem 1rem;
-    }
-  
-    .form-input,
-    .form-submit-btn {
-      font-size: 0.95rem;
-    }
+
+  .edit-book-title {
+    font-size: 1.4rem;
   }
-  
+
+  .form-input,
+  .form-submit-btn {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.85rem;
+  }
+
+  .form-submit-btn {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+}
