@@ -1,62 +1,125 @@
 /* Hometab container */
 .hometab-container {
-    display: flex;
-    justify-content: space-between; /* Align the two sections side by side */
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* Admin User Section */
+.admin-user-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+/* Admin Box Styling */
+.admin-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  flex: 1 1 300px;
+}
+
+.admin-card {
+  flex: 1 1 140px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.card-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card-icon:hover {
+  transform: scale(1.1);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Image Section Styling */
+.image-container {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .hometab-container {
+    flex-direction: column;
+    padding: 15px;
   }
-  
-  /* Admin User Section */
+
   .admin-user-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Vertically align items in the center */
-    width: 100%;
-    margin: auto;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  /* Admin Box Styling */
+
   .admin-box {
-    display: flex;
-    gap: 40px; /* Adds spacing between admin box and image */
+    justify-content: center;
   }
-  
+
   .admin-card {
-    margin-right: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .card-icon {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-  
-  .card-icon:hover {
-    transform: scale(1.1); /* Hover effect to enlarge the image */
-  }
-  
-  .card-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* Image Section Styling */
-  .image-container {
-    flex: 1;
-  }
-  
-  .right-image {
     width: 100%;
-    max-width: 400px; /* Limit the image width */
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
   }
-  
+
+  .card-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
+
+  .right-image {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title {
+    font-size: 14px;
+  }
+
+  .card-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .admin-card {
+    padding: 15px;
+  }
+
+  .hometab-container {
+    padding: 10px;
+  }
+}
