@@ -1,121 +1,181 @@
 /* Main container for the Return Book UI */
 .return-book-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #ffffff; /* white background for clean contrast */
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    color: #333; /* Dark text for better readability */
-    font-family: 'Segoe UI', sans-serif;
-    /* Sky blue border on left */
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
 }
 
 /* Heading style */
 .return-book-container h2 {
-    text-align: center;
-    color: #1b375f; /* Sky blue heading */
-    margin-bottom: 25px;
-    font-size: 28px;
-    font-weight: bold;
+  text-align: center;
+  color: #1b375f;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 /* Input container styles */
 .form-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .form-group input {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #c5dbe3; /* Sky blue border */
-    border-radius: 8px;
-    background-color: #f1f9ff; /* Very light sky blue */
-    color: #333;
-    width: 250px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #c5dbe3;
+  border-radius: 8px;
+  background-color: #f1f9ff;
+  color: #333;
+  width: 250px;
+  box-sizing: border-box;
 }
 
 .form-group input::placeholder {
-    color: #999;
+  color: #999;
 }
 
-/* Submit button style */
 .form-group button {
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: #287a97; /* Sky blue background */
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 250px;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #287a97;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 250px;
 }
 
 .form-group button:hover {
-    background-color: #0090d9; /* Slightly darker blue on hover */
+  background-color: #0090d9;
 }
 
 /* Table container */
 .table-container {
-    overflow-x: auto;
-    margin-top: 20px;
+  overflow-x: auto;
+  margin-top: 20px;
 }
 
 /* Table styles */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-width: 600px;
 }
 
 thead {
-    background-color: #00b0f0; /* Sky blue background */
-    color: #ffffff;
-    text-transform: uppercase;
+  background-color: #00b0f0;
+  color: #ffffff;
+  text-transform: uppercase;
 }
 
 th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 tbody tr:hover {
-    background-color: #f1f9ff; /* Light sky blue on hover */
+  background-color: #f1f9ff;
 }
 
-/* Return button inside the table */
 .return-btn {
-    padding: 6px 12px;
-    background-color: #dc3545; /* Red color for "Return" */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 6px 12px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .return-btn:hover {
-    background-color: #c82333; /* Darker red on hover */
+  background-color: #c82333;
 }
 
 /* No books message */
 .no-books {
-    text-align: center;
-    margin-top: 20px;
-    color: #555;
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
 }
 
-/* Loading state for the Fetch button */
+/* Disabled button state */
 button:disabled {
-    background-color: #c0c0c0;
-    cursor: not-allowed;
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .return-book-container {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .return-book-container h2 {
+    font-size: 24px;
+  }
+
+  .form-group input,
+  .form-group button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  table {
+    min-width: 100%;
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .return-book-container {
+    padding: 15px;
+  }
+
+  .return-book-container h2 {
+    font-size: 20px;
+  }
+
+  .form-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-group input,
+  .form-group button {
+    width: 100%;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  .return-btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .no-books {
+    font-size: 0.95rem;
+  }
 }
