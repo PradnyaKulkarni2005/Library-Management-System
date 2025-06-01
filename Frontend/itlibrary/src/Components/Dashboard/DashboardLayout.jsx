@@ -9,8 +9,9 @@ import AddStudent from './Student/AddStudent';
 import UpdateStudent from './Student/UpdateStudent';
 import OverdueBooks from './OverdueBooks';
 import Analysis from './Analysis';
-import MostIssuedBook from './MostIssuedbook';  
+import MostIssuedbook from './MostIssuedbook';  
 import './Dashboard.css';
+import AdminReport from './AdminReport';
 
 const DashboardLayout = () => {
     const [activeTab, setActiveTab] = useState('available');
@@ -37,7 +38,9 @@ const DashboardLayout = () => {
             case 'pending':
                 return <OverdueBooks />;
             case 'mostissued':
-                return <MostIssuedBook />;
+                return <MostIssuedbook />;
+            case 'report':
+                return <AdminReport />;
             default:
                 return <AvailableBooks />;
         }
@@ -56,6 +59,7 @@ const DashboardLayout = () => {
                 <button onClick={() => setActiveTab('pending')}>Books Pending Return</button>
                 <button onClick={() => setActiveTab('analysis')}>Analysis</button>
                 <button onClick={() => setActiveTab('mostissued')}>Most Issued Books</button>
+                <button onClick={() => setActiveTab('report')}>Admin Report</button>
                 
 
             </aside>
