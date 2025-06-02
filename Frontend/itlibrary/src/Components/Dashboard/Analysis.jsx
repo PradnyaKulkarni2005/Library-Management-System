@@ -14,9 +14,10 @@ export default function Analysis() {
             const counts = await getBookStatusCounts();
             console.log("Book status counts:", counts);
             const chartData = [
-                { name: 'Available', value: counts.Available },
-                { name: 'Issued', value: counts.Issued }
-            ];
+    { name: 'Available', value: Number(counts.Available) },
+    { name: 'Issued', value: Number(counts.Issued) }
+];
+
             setData(chartData);
         }
         fetchData();

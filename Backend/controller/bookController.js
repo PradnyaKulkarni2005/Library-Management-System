@@ -280,26 +280,27 @@ exports.getReminderUsers = async (req, res) => {
 //analysis of available and issued books
 exports.getBookStatusCounts = async (req, res) => {
     const query = `
-        SELECT 'Available' AS status, COUNT(*) AS count
-        FROM book
-        WHERE Book_ID NOT IN (
-            SELECT Book_ID FROM issuedbooks WHERE Return_Date IS NULL
-        )
-        UNION ALL
-        SELECT 'Issued' AS status, COUNT(*) AS count
-        FROM issuedbooks
-        WHERE Return_Date IS NULL
+        SELECT 
+            SUM(b.Total_Copies) - IFNULL(SUM(ib.issued_count), 0) AS Available,
+            IFNULL(SUM(ib.issued_count), 0) AS Issued
+        FROM book b
+        LEFT JOIN (
+            SELECT Book_ID, COUNT(*) AS issued_count
+            FROM issuedbooks
+            WHERE Return_Date IS NULL
+            GROUP BY Book_ID
+        ) ib ON b.Book_ID = ib.Book_ID
     `;
 
     try {
-        const [results] = await db.query(query);  // Destructure if using mysql2 or wrapped db
-        const counts = { Available: 0, Issued: 0 };
+        const [results] = await db.query(query);
+        const row = results[0] || { Available: 0, Issued: 0 };
+        console.log("Book status counts:", row); // Debugging line
 
-        results.forEach(row => {
-            counts[row.status] = row.count;
+        res.json({
+            Available: row.Available,
+            Issued: row.Issued
         });
-
-        res.json(counts);
     } catch (error) {
         console.error("Error fetching book status counts:", error);
         res.status(500).json({ message: "Server error" });
