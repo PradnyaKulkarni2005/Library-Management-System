@@ -273,7 +273,7 @@ exports.getPendingBooks = async (req, res) => {
             users s ON ib.prn = s.prn
         WHERE 
             ib.Return_Date IS NULL 
-            // AND DATEDIFF(CURDATE(), ib.Issue_Date) > 0
+            
     `;
 
     try {
@@ -340,3 +340,5 @@ exports.getBookStatusCounts = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+//// AND DATEDIFF(CURDATE(), ib.Issue_Date) > 0
