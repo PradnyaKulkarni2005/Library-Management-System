@@ -101,7 +101,9 @@ exports.issueBook = async (req, res) => {
         await db.query("INSERT INTO issuedbooks (BOOK_ID,prn) VALUES (?, ?)", [bookId, prn]);
 
         // 4. Update available copies
+        console.log("Updating available copies for book ID:", bookId); // Debugging line
         await db.query("UPDATE book SET Available_Copies = Available_Copies - 1 WHERE BOOK_ID = ?", [bookId]);
+        console.log("Update completed of available books");
 
         return res.json({ message: 'Book issued successfully' });
 
