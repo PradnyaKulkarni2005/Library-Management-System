@@ -1,15 +1,16 @@
 import axios from 'axios';
 
 // Set the base URL for the API
-const API_URL = process.env.REACT_APP_API_URL
-  ? `${process.env.REACT_APP_API_URL}/api`
-  : "http://localhost:5000/api";
+const isLocal = window.location.hostname === 'localhost';
 
+const API_URL = isLocal
+  ? "http://localhost:5000/api"
+  : "https://librarybackend-qzpm.onrender.com/api";
 
-// Create an axios instance
 const axiosInstance = axios.create({
-  baseURL: API_URL, 
+  baseURL: API_URL,
 });
+
 
 // Admin login API
 export const login = async (formData) => {

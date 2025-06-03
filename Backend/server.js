@@ -10,36 +10,28 @@ const startReminderJob = require('./jobs/reminderJob');
 
 const app = express();
 
-// ✅ CORS Configuration
-const allowedOrigins = [
-  'http://localhost:3000', // For local development
-  'https://library-management-system-umber-six.vercel.app' ];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like curl/postman)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+// ✅ CORS Configuration (simplified and safe)
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://library-management-system-umber-six.vercel.app'],
   credentials: true,
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ✅ Preflight support
 
 app.use(bodyParser.json());
 
-// Routes
+// ✅ API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/book', bookRoutes);
 app.use('/api/student', userRoutes);
 
-// Start background jobs
+// ✅ Background job
 startReminderJob();
 
-// Start the server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

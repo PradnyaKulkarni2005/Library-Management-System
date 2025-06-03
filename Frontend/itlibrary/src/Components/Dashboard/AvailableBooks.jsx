@@ -53,6 +53,8 @@ export default function AvailableBooks() {
                         <th>Title</th>
                         <th>Category</th>
                         <th>Author</th>
+                        <th>Available Copies</th>
+                        <th>Total Copies</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -63,6 +65,8 @@ export default function AvailableBooks() {
                             <td>{book.Title}</td>
                             <td>{book.Category}</td>
                             <td>{book.Author}</td>
+                            <td>{book.Available_Copies}</td>
+                            <td>{book.Total_Copies}</td>
                             <td>
                                 <button onClick={() => handleDelete(book.Book_ID)}>
                                     Delete

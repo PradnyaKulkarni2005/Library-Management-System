@@ -114,29 +114,61 @@ exports.issueBook = async (req, res) => {
 
 // Return the book
 exports.returnBook = (req, res) => {
-    const { issueId } = req.params;
+  const { issueId } = req.params;
 
-    // Update the IssuedBooks table to set the Return_Date
-    db.query("UPDATE issuedbooks SET Return_Date = NOW() WHERE Issue_ID = ? AND Return_Date IS NULL", [issueId], (err, result) => {
-        if (err) {
-            console.error("Database Error:", err);
+  // Start by updating Return_Date
+  db.query(
+    "UPDATE issuedbooks SET Return_Date = NOW() WHERE Issue_ID = ? AND Return_Date IS NULL",
+    [issueId],
+    (err, updateResult) => {
+      if (err) {
+        console.error("Database Error on updating Return_Date:", err);
+        return res.status(500).json({ error: err });
+      }
+
+      if (updateResult.affectedRows === 0) {
+        return res.status(400).json({ message: 'Book not issued or already returned' });
+      }
+
+      console.log("Return_Date updated, fetching BOOK_ID...");
+
+      // Fetch BOOK_ID for the issued book
+      db.query(
+        "SELECT BOOK_ID FROM issuedbooks WHERE Issue_ID = ?",
+        [issueId],
+        (err, rows) => {
+          if (err) {
+            console.error("Database Error fetching BOOK_ID:", err);
             return res.status(500).json({ error: err });
-        }
+          }
 
-        if (result.affectedRows === 0) {
-            return res.status(400).json({ message: 'Book not issued or already returned' });
-        }
+          if (rows.length === 0) {
+            return res.status(404).json({ message: 'Issued book record not found' });
+          }
 
-        // Update the available copies in the Book table
-        db.query("UPDATE book SET Available_Copies = Available_Copies + 1 WHERE BOOK_ID = (SELECT BOOK_ID FROM issuedbooks WHERE Issue_ID = ?)", [issueId], (err, result) => {
-            if (err) {
-                console.error("Database Error:", err);
+          const bookId = rows[0].BOOK_ID;
+          console.log("BOOK_ID found:", bookId);
+
+          // Update Available_Copies now
+          db.query(
+            "UPDATE book SET Available_Copies = Available_Copies + 1 WHERE BOOK_ID = ?",
+            [bookId],
+            (err, updateCopiesResult) => {
+              if (err) {
+                console.error("Database Error updating Available_Copies:", err);
                 return res.status(500).json({ error: err });
+              }
+
+              console.log("Available_Copies updated successfully.");
+              return res.json({ message: 'Book returned successfully' });
             }
-            res.json({ message: 'Book returned successfully' });
-        });
-    });
+          );
+        }
+      );
+    }
+  );
 };
+
 // Fetch issued books by PRN where Return_Date is NULL
 exports.fetchIssuedBooksByPrn = async (req, res) => {
     const prn = req.params.prn;
