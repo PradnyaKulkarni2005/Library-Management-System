@@ -14,14 +14,15 @@ const axiosInstance = axios.create({
 
 // Admin login API
 export const login = async (formData) => {
-    try {
-        const response = await axiosInstance.post('/auth/admin/login', formData);
-        return response.data;
-    } catch (error) {
-        console.error("Login API Error:", error.response ? error.response.data : error.message);
-        throw error;
-    }
+  try {
+    const response = await axiosInstance.post('/auth/admin/login', formData);
+    return response.data;
+  } catch (error) {
+    console.error("Login API Error:", error.response ? error.response.data : error.message);
+    throw error;
+  }
 };
+
 
 // Get all books
 export const getBooks = async () => {
