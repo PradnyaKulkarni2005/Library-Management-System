@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./CategoryCount.css"; // Import the CSS file
+import "./CategoryCount.css";
+import { CategoryCount as fetchCategoryCount } from "../../api"; // Renamed to avoid name clash
 
 const CategoryCount = () => {
   const [count, setCount] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("/api/category-count")
+    fetchCategoryCount()
       .then((response) => setCount(response.data.count))
       .catch(() => setError("Failed to load category count"));
   }, []);
