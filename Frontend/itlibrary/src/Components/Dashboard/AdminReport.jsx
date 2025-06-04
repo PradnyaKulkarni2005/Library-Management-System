@@ -4,6 +4,8 @@ import jsPDF from "jspdf";
 import MostIssuedBooks from "./MostIssuedbook";
 import OverdueBooks from "./OverdueBooks";
 import BooksStatus from "./Analysis";
+import CategoryCount from "./CategoryCount";
+
 
 const AdminReport = () => {
   const reportRef = useRef();
@@ -37,6 +39,7 @@ const AdminReport = () => {
 
       <div ref={reportRef}>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CategoryCount />
           <BooksStatus />
           <OverdueBooks />
         </section>
