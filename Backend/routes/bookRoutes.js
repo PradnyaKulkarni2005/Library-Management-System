@@ -1,6 +1,6 @@
 const express = require('express');
 const { getBooks, addBook,updateBook,deleteBook,issueBook,returnBook,fetchIssuedBooksByPrn,
-    getMostIssuedBooks,searchBooks,getPendingBooks,getBookStatusCounts } = require('../controller/bookController');
+    getMostIssuedBooks,searchBooks,getPendingBooks,getBookStatusCounts,getBookCategories } = require('../controller/bookController');
 const router = express.Router();
 // Get Books route
 router.get('/get', getBooks);
@@ -23,5 +23,6 @@ router.get('/search', searchBooks);
 //get pending books which are not returned
 router.get('/pending', getPendingBooks);
 router.get('/status',getBookStatusCounts);
+router.get('/categories', getBookCategories);
 
 module.exports = router;

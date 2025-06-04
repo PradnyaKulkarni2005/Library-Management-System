@@ -1,0 +1,24 @@
+.category-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  max-width: 300px;
+}
+
+.category-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.category-count {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2563eb; /* A calm blue */
+}
+
+.error-text {
+  color: red;
+  font-weight: 500;
+}

@@ -164,3 +164,13 @@ export const getBookStatusCounts = async () => {
     }
 };
 
+//get book categories
+export const getBookCategories = async () => {
+    try {
+        const response = await axiosInstance.get('/book/categories');
+        return response.data;
+    } catch (error) {
+        console.error("Get Book Categories API Error:", error.response ? error.response.data : error.message);
+        throw error;
+    }
+};

@@ -328,3 +328,17 @@ exports.getBookStatusCounts = async (req, res) => {
 };
 
 //// AND DATEDIFF(CURDATE(), ib.Issue_Date) > 0
+
+// displaying category 
+exports.getBookCategories = async (req, res) => {
+    db.query(
+    "SELECT COUNT(DISTINCT Category) AS categoryCount FROM book",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching category count:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      res.json({ count: results[0].categoryCount });
+    }
+  );
+};
