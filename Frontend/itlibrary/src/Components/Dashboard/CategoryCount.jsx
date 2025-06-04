@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./CategoryCount.css";
-import { getBookCategories as fetchCategoryCount } from "../../api"; // Renamed to avoid name clash
+import { getBookCategories } from "../../api";
 
 const CategoryCount = () => {
   const [count, setCount] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchCategoryCount()
-      .then((response) => setCount(response.data.count))
-      .catch(() => setError("Failed to load category count"));
-  }, []);
+ useEffect(() => {
+  const fetchCount = async () => {
+    try {
+      const response = await getBookCategories(); // returns { count: 12 }
+      console.log("Category count fetched successfully:", response.count);
+      setCount(response.count); // ✅ FIXED
+    } catch (err) {
+      console.error("API Error:", err);
+      setError("Failed to fetch category count. Please try again later.");
+    }
+  };
+  fetchCount();
+}, []);
+
 
   if (error) return <div className="error-text">{error}</div>;
 
@@ -18,10 +27,11 @@ const CategoryCount = () => {
     <div className="category-box">
       <h2 className="category-title">📚 Categories in Library</h2>
       {count !== null ? (
-        <p className="category-count">{count}</p>
-      ) : (
-        <p>Loading...</p>
-      )}
+  <p className="category-count">{count}</p>
+) : (
+  <p>Loading...</p>
+)}
+
     </div>
   );
 };
