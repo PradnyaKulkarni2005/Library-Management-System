@@ -174,3 +174,12 @@ export const getBookCategories = async () => {
         throw error;
     }
 };
+export const getBooksPerCategory = async () => {
+  try {
+    const response = await axiosInstance.get('/book/percat');
+    return response.data;
+  } catch (error) {
+    console.error("Get Books Per Category API Error:", error.response ? error.response.data : error.message);
+    throw error;
+  }
+};

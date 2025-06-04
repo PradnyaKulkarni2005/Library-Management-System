@@ -35,12 +35,13 @@ const DashboardLayout = () => {
                 return <AddStudent />;
             case 'updatestd':
                 return <UpdateStudent />;
+            case 'report':
+                return <AdminReport />;
             case 'pending':
                 return <OverdueBooks />;
             case 'mostissued':
                 return <MostIssuedbook />;
-            case 'report':
-                return <AdminReport />;
+            
             default:
                 return <AvailableBooks />;
         }
