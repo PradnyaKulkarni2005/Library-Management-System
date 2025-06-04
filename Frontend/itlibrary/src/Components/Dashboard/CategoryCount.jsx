@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./CategoryCount.css";
-import { CategoryCount as fetchCategoryCount } from "../../api"; // Renamed to avoid name clash
+import { getBookCategories as fetchCategoryCount } from "../../api"; // Renamed to avoid name clash
 
 const CategoryCount = () => {
   const [count, setCount] = useState(null);
