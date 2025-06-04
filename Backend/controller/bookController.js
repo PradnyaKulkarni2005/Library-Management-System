@@ -336,10 +336,28 @@ exports.getBookCategories = async (req, res) => {
       "SELECT COUNT(DISTINCT Category) AS categoryCount FROM book"
     );
     res.json({ count: results[0].categoryCount });
+    console.log("Query results:", results); // Add this line to inspect what MySQL is returning
+
   } catch (error) {
     console.error("Error fetching category count:", error);
     res.status(500).json({ error: "Database error" });
   }
 };
+// Get all categories books
+exports.getBooksPerCategory = async (req, res) => {
+  try {
+    const [results] = await db.query(`
+      SELECT Category, COUNT(*) AS bookCount 
+      FROM book 
+      GROUP BY Category
+    `);
+
+    res.json({ categories: results });
+  } catch (error) {
+    console.error("Error fetching books per category:", error);
+    res.status(500).json({ error: "Database error" });
+  }
+};
+
 
 
