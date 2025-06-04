@@ -44,9 +44,7 @@ const AdminReport = () => {
           <div className="card">
             <BooksStatus />
           </div>
-          <div className="card">
-            <OverdueBooks />
-          </div>
+          
           <div className="card">
             <BooksPerCat />
           </div>
