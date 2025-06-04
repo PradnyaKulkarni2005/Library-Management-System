@@ -332,20 +332,14 @@ exports.getBookStatusCounts = async (req, res) => {
 // displaying category 
 exports.getBookCategories = async (req, res) => {
   try {
-    const categoryCount = await new Promise((resolve, reject) => {
-      db.query(
-        "SELECT COUNT(DISTINCT Category) AS categoryCount FROM book",
-        (err, results) => {
-          if (err) return reject(err);
-          resolve(results[0].categoryCount);
-        }
-      );
-    });
-
-    res.json({ count: categoryCount });
+    const [results] = await db.query(
+      "SELECT COUNT(DISTINCT Category) AS categoryCount FROM book"
+    );
+    res.json({ count: results[0].categoryCount });
   } catch (error) {
     console.error("Error fetching category count:", error);
     res.status(500).json({ error: "Database error" });
   }
 };
+
 
