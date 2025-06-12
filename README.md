@@ -1,6 +1,6 @@
 # 📚 Library Management System
 
-A full-stack **Library Management System** built using **React**, **Node.js**, and **MySQL**. This system supports secure admin login, book/user management, issuing & returning of books, email reminders, and insightful data visualization.
+A full-stack **Library Management System** built with **React**, **Node.js**, and **MySQL**. Designed for internal use to manage library operations such as book circulation, user records, and overdue tracking.
 
 ---
 
@@ -14,18 +14,15 @@ A full-stack **Library Management System** built using **React**, **Node.js**, a
 
 ## ✨ Features
 
-- 🔐 Secure **admin login** system
-- 📘 **CRUD operations** on books and users
-- 🔄 Book **issuing & return** management
-- 📨 **Automated email reminders** for due books using Nodemailer + Node-cron
-- 📊 **Visual statistics** for books using Pie & Bar charts (Recharts)
+- 🔐 Secure admin login
+- 📘 Manage books and users
+- 🔄 Book issuing & return tracking
+- 📨 Automated email reminders (Nodemailer + Node-cron)
+- 📊 Visual stats with Pie and Bar charts (Recharts)
 
 ---
+## 📸 Overview
 
-## 🚀 Getting Started
 
-### 📁 Clone the Repository
 
-```bash
-git clone https://github.com/PradnyaKulkarni2005/Library-Management-System.git
 
