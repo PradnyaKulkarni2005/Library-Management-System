@@ -27,5 +27,5 @@ A full-stack **Library Management System** built using **React**, **Node.js**, a
 ### 📁 Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/library-management-system.git
-cd library-management-system
+git clone https://github.com/PradnyaKulkarni2005/Library-Management-System.git
+
