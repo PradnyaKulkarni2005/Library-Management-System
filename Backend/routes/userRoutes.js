@@ -13,4 +13,4 @@ router.delete('/delete/:PRN', userController.deleteStudent);
 // // Get student by PRN
 // router.get('/get/:PRN', userController.getStudentByPRN);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-
 import nodemailer from 'nodemailer';
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 
 const sendMail = async (to, subject, text) => {
     const mailOptions = {
-        from: process.env.MAIL_USER, // Must match Gmail user
+        from: process.env.MAIL_USER,
         to,
         subject,
         text
@@ -19,7 +19,7 @@ const sendMail = async (to, subject, text) => {
     try {
         const info = await transporter.sendMail(mailOptions);
         console.log(`✅ Email sent to ${to}. Message ID: ${info.messageId}`);
-        
+
         if (info.accepted.includes(to)) {
             console.log("📬 Email was accepted by the mail server.");
             return true;
@@ -33,4 +33,4 @@ const sendMail = async (to, subject, text) => {
     }
 };
 
-module.exports = sendMail;
+export default sendMail;

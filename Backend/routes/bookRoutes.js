@@ -42,4 +42,4 @@ router.get('/categories', getBookCategories);
 router.get('/percat', getBooksPerCategory);
 
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-import supabase from '../config/supabaseClient.js';
+import supabase from "../config/db.js"; // assuming default export
 
 const getReminderUsers = async () => {
     try {
@@ -13,18 +13,19 @@ const getReminderUsers = async () => {
 
         if (error) throw error;
 
-        // Filter books issued more than 10 days ago
         const today = new Date();
-        const filtered = data.filter(item => {
-            const issueDate = new Date(item.Issue_Date);
-            const diffDays = Math.floor((today - issueDate) / (1000 * 60 * 60 * 24));
-            return diffDays > 10;
-        }).map(item => ({
-            Name: item.users.Name,
-            email: item.users.email,
-            Title: item.book.Title,
-            DaysSinceIssue: Math.floor((today - new Date(item.Issue_Date)) / (1000 * 60 * 60 * 24))
-        }));
+        const filtered = data
+            .filter(item => {
+                const issueDate = new Date(item.Issue_Date);
+                const diffDays = Math.floor((today - issueDate) / (1000 * 60 * 60 * 24));
+                return diffDays > 10;
+            })
+            .map(item => ({
+                Name: item.users.Name,
+                email: item.users.email,
+                Title: item.book.Title,
+                DaysSinceIssue: Math.floor((today - new Date(item.Issue_Date)) / (1000 * 60 * 60 * 24))
+            }));
 
         return filtered;
 
@@ -34,4 +35,4 @@ const getReminderUsers = async () => {
     }
 };
 
-module.exports = getReminderUsers;
+export default getReminderUsers;

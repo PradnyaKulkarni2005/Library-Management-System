@@ -28,4 +28,4 @@ const startReminder = () => {
     });
 };
 
-module.exports = startReminder;
+export default startReminder;
