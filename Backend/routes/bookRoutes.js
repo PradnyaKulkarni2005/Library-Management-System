@@ -1,6 +1,20 @@
-const express = require('express');
-const { getBooks, addBook,updateBook,deleteBook,issueBook,returnBook,fetchIssuedBooksByPrn,
-    getMostIssuedBooks,searchBooks,getPendingBooks,getBookStatusCounts,getBookCategories,getBooksPerCategory } = require('../controller/bookController');
+import express from 'express';
+import {
+  getBooks,
+  addBook,
+  updateBook,
+  deleteBook,
+  issueBook,
+  returnBook,
+  fetchIssuedBooksByPrn,
+  getMostIssuedBooks,
+  searchBooks,
+  getPendingBooks,
+  getBookStatusCounts,
+  getBookCategories,
+  getBooksPerCategory
+} from '../controller/bookController.js';
+
 const router = express.Router();
 // Get Books route
 router.get('/get', getBooks);

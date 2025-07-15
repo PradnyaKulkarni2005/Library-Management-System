@@ -1,6 +1,7 @@
-const cron = require('node-cron');
-const getReminderUsers = require('../utils/reminderHelper');
-const sendMail = require('../utils/mailer');
+import cron from 'node-cron';
+import getReminderUsers from '../utils/reminderHelper.js';
+import sendMail from '../utils/mailer.js';
+
 
 const startReminder = () => {
     console.log("🔁 Starting reminder job...");

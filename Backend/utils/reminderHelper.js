@@ -1,4 +1,4 @@
-const { supabase } = require('../config/db');
+import supabase from '../config/supabaseClient.js';
 
 const getReminderUsers = async () => {
     try {

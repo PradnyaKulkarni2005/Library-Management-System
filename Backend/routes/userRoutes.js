@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import * as userController from '../controller/userController.js';
+
 const router = express.Router();
-const userController = require('../controller/userController');
 // Get all students
 router.get('/get', userController.getStudents);
 // Add new student

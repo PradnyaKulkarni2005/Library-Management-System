@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
 // Importing the adminLogin function from the authController
-const { adminLogin } = require('../controller/authController');
+import { adminLogin } from '../controller/authController.js';
+
 const router = express.Router();
 // Admin login route
 router.post('/admin/login', adminLogin);
