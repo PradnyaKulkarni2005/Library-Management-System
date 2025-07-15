@@ -1,10 +1,13 @@
-const db = require('../config/db');
+import { supabase } from '../config/db.js';
 
-// ✅ Get all students (using async/await)
-exports.getStudents = async (req, res) => {
+
+//  Get all students (using async/await)
+export const getStudents = async (req, res) => {
     try {
-        const [results] = await db.query('SELECT * FROM users');
-        res.json(results); 
+        const { data, error } = await supabase.from('users').select('*');
+        if (error) throw error;
+
+        res.json(data);
     } catch (err) {
         console.error("Database Error:", err);
         res.status(500).json({ error: err.message });
@@ -12,35 +15,36 @@ exports.getStudents = async (req, res) => {
 };
 
 
+
 // Add new student (using async/await)
-exports.addStudent = async (req, res) => {
+export const addStudent = async (req, res) => {
     const { Name, PRN, Department, Email } = req.body;
 
     try {
-        const [result] = await db.query('INSERT INTO users SET ?', {
-            Name,
-            PRN,
-            Department,
-            Email
-        });
+        const { error } = await supabase.from('users').insert([{ Name, PRN, Department, Email }]);
+        if (error) throw error;
+
         res.json({ message: 'Student added successfully' });
     } catch (err) {
         console.error("Database Error:", err);
         res.status(500).json({ error: err.message });
     }
 };
+
 //update student
-exports.updateStudent = async (req, res) => {
+export const updateStudent = async (req, res) => {
     const { Name, PRN, Department, Email } = req.body;
 
     try {
-        const [result] = await db.query('UPDATE users SET ? WHERE PRN = ?', [
-            { Name, Department, Email },
-            PRN
-        ]);
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Student not found' });
-        }
+        const { data, error } = await supabase
+            .from('users')
+            .update({ Name, Department, Email })
+            .eq('PRN', PRN)
+            .select();
+
+        if (error) throw error;
+        if (!data.length) return res.status(404).json({ message: 'Student not found' });
+
         res.json({ message: 'Student updated successfully' });
     } catch (err) {
         console.error("Database Error:", err);
@@ -48,15 +52,21 @@ exports.updateStudent = async (req, res) => {
     }
 };
 
+
 //delete student
-exports.deleteStudent = async (req, res) => {
+export const deleteStudent = async (req, res) => {
     const { PRN } = req.params;
 
     try {
-        const [result] = await db.query('DELETE FROM users WHERE PRN = ?', [PRN]);
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Student not found' });
-        }
+        const { data, error } = await supabase
+            .from('users')
+            .delete()
+            .eq('PRN', PRN)
+            .select();
+
+        if (error) throw error;
+        if (!data.length) return res.status(404).json({ message: 'Student not found' });
+
         res.json({ message: 'Student deleted successfully' });
     } catch (err) {
         console.error("Database Error:", err);

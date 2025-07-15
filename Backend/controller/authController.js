@@ -1,8 +1,8 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const pool = require("../config/db"); // Ensure this is correctly imported
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { supabase } from "../config/db.js"; // Supabase client
 
-const adminLogin = async (req, res) => {
+export const adminLogin = async (req, res) => {
     try {
         const { username, password } = req.body;
 
@@ -10,22 +10,26 @@ const adminLogin = async (req, res) => {
             return res.status(400).json({ message: "Username and password are required" });
         }
 
-        // Fetch admin user from the database
-        const [rows] = await pool.execute("SELECT * FROM admin WHERE username = ?", [username]);
+        // Fetch admin user from Supabase
+        const { data, error } = await supabase
+            .from("admin")
+            .select("*")
+            .eq("username", username)
+            .single(); // since usernames are unique
 
-        if (rows.length === 0) {
+        if (error || !data) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
-        const adminUser = rows[0];
+        const adminUser = data;
 
-        // Compare entered password with stored hashed password
+        // Compare password
         const isPasswordValid = await bcrypt.compare(password, adminUser.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
-        // Generate JWT token
+        // Create JWT
         const token = jwt.sign(
             { adminId: adminUser.id, username: adminUser.username },
             process.env.JWT_SECRET || "your_secret_key",
@@ -38,5 +42,3 @@ const adminLogin = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
-
-module.exports = { adminLogin };
