@@ -1,4 +1,4 @@
-import supabase from "../config/db.js"; // assuming default export
+import supabase from "../config/db.js";
 
 const getReminderUsers = async () => {
     try {

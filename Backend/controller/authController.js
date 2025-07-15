@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { supabase } from "../config/db.js"; // Supabase client
+import supabase from "../config/db.js"; // Supabase client
 
 export const adminLogin = async (req, res) => {
     try {

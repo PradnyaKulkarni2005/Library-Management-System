@@ -1,4 +1,4 @@
-import { supabase } from '../config/db.js';
+import supabase from '../config/db.js';
 
 
 //  Get all students (using async/await)

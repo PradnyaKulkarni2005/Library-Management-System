@@ -1,4 +1,4 @@
-import { supabase } from '../config/db.js';
+import supabase from '../config/db.js';
 
 // Handling the get request for books
 export const getBooks = async (req, res) => {
