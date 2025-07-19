@@ -5,11 +5,11 @@ const getReminderUsers = async () => {
         const { data, error } = await supabase
             .from('issuedbooks')
             .select(`
-                users(Name, email),
-                book(Title),
-                Issue_Date
+                users(name, email),
+                book(title),
+                issue_date
             `)
-            .is('Return_Date', null);
+            .is('return_date', null);
 
         if (error) throw error;
 
@@ -21,10 +21,10 @@ const getReminderUsers = async () => {
                 return diffDays > 10;
             })
             .map(item => ({
-                Name: item.users.Name,
+                Name: item.users.name,
                 email: item.users.email,
-                Title: item.book.Title,
-                DaysSinceIssue: Math.floor((today - new Date(item.Issue_Date)) / (1000 * 60 * 60 * 24))
+                Title: item.book.title,
+                DaysSinceIssue: Math.floor((today - new Date(item.issue_date)) / (1000 * 60 * 60 * 24))
             }));
 
         return filtered;

@@ -18,10 +18,10 @@ export const getStudents = async (req, res) => {
 
 // Add new student (using async/await)
 export const addStudent = async (req, res) => {
-    const { Name, PRN, Department, Email } = req.body;
+    const { name, prn, department, email } = req.body;
 
     try {
-        const { error } = await supabase.from('users').insert([{ Name, PRN, Department, Email }]);
+        const { error } = await supabase.from('users').insert([{ name, prn, department, email }]);
         if (error) throw error;
 
         res.json({ message: 'Student added successfully' });
@@ -33,13 +33,13 @@ export const addStudent = async (req, res) => {
 
 //update student
 export const updateStudent = async (req, res) => {
-    const { Name, PRN, Department, Email } = req.body;
+    const { name, prn, department, email  } = req.body;
 
     try {
         const { data, error } = await supabase
             .from('users')
-            .update({ Name, Department, Email })
-            .eq('PRN', PRN)
+            .update({ name, department, email })
+            .eq('prn', prn)
             .select();
 
         if (error) throw error;
@@ -55,13 +55,13 @@ export const updateStudent = async (req, res) => {
 
 //delete student
 export const deleteStudent = async (req, res) => {
-    const { PRN } = req.params;
+    const { prn } = req.params;
 
     try {
         const { data, error } = await supabase
             .from('users')
             .delete()
-            .eq('PRN', PRN)
+            .eq('prn',prn)
             .select();
 
         if (error) throw error;
