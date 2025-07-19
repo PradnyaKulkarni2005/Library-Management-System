@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { updateStudent, getStudents } from "../../../api";
 import "../EditBook.css";
+import Swa from "sweetalert2";
 
 const UpdateStudent = () => {
   const [prnInput, setPrnInput] = useState("");
   const [formData, setFormData] = useState({
-    Name: "",
-    PRN: "",
-    Department: "",
-    Email: "",
+    name: "",
+    prn: "",
+    department: "",
+    email: "",
   });
   const [studentFound, setStudentFound] = useState(false);
 
@@ -19,14 +20,19 @@ const UpdateStudent = () => {
 
       if (student) {
         setFormData({
-          Name: student.Name,
-          PRN: student.prn,
-          Department: student.Department,
-          Email: student.Email,
+          name: student.name,
+          prn: student.prn,
+          department: student.department,
+          email: student.email,
         });
         setStudentFound(true);
       } else {
-        alert("Student with this PRN not found.");
+        
+        Swa.fire({
+          icon: "error",
+          title: "Not Found",
+          text: "Student with this PRN not found.",
+        });
         setStudentFound(false);
       }
     } catch (error) {
@@ -46,10 +52,15 @@ const UpdateStudent = () => {
     e.preventDefault();
     try {
       await updateStudent(formData); // Includes PRN in request body
-      alert("Student updated successfully!");
+     
+      Swa.fire({
+        icon: "success",
+        title: "Success",
+        text: "Student updated successfully!",
+      });
       setStudentFound(false);
       setPrnInput("");
-      setFormData({ Name: "", PRN: "", Department: "", Email: "" });
+      setFormData({ name: "", prn: "", department: "", email: "" });
     } catch (error) {
       console.error("Error updating student:", error);
       alert("Failed to update student.");
@@ -82,7 +93,7 @@ const UpdateStudent = () => {
             type="text"
             name="Name"
             placeholder="Student Name"
-            value={formData.Name}
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -91,7 +102,7 @@ const UpdateStudent = () => {
             type="text"
             name="Department"
             placeholder="Department"
-            value={formData.Department}
+            value={formData.department}
             onChange={handleChange}
             required
           />
@@ -100,7 +111,7 @@ const UpdateStudent = () => {
             type="email"
             name="Email"
             placeholder="College Email-id"
-            value={formData.Email}
+            value={formData.email}
             onChange={handleChange}
             required
           />

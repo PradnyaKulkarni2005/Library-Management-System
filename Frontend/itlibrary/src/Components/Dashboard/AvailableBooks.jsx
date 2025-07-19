@@ -13,6 +13,7 @@ export default function AvailableBooks() {
     const fetchBooks = async () => {
         try {
             const booksData = await getBooks();
+            console.log("Fetched books:", booksData);
             setBooks(booksData);
         } catch (error) {
             console.error("Error fetching books:", error);
@@ -32,10 +33,11 @@ export default function AvailableBooks() {
     };
 
     const filteredBooks = books.filter(book =>
-        book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.Author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.Category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    book.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    book.author?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    book.category?.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
 
     return (
         <div className="available-books">
@@ -59,22 +61,23 @@ export default function AvailableBooks() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredBooks.map((book, index) => (
-                        <tr key={book.Book_ID}>
-                            <td>{index + 1}</td>
-                            <td>{book.Title}</td>
-                            <td>{book.Category}</td>
-                            <td>{book.Author}</td>
-                            <td>{book.Available_Copies}</td>
-                            <td>{book.Total_Copies}</td>
-                            <td>
-                                <button onClick={() => handleDelete(book.Book_ID)}>
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
+    {filteredBooks.map((book, index) => (
+        <tr key={book.book_id}>
+            <td>{index + 1}</td>
+            <td>{book.title}</td>
+            <td>{book.category}</td>
+            <td>{book.author}</td>
+            <td>{book.available_copies}</td>
+            <td>{book.total_copies}</td>
+            <td>
+                <button onClick={() => handleDelete(book.book_id)}>
+                    Delete
+                </button>
+            </td>
+        </tr>
+    ))}
+</tbody>
+
             </table>
         </div>
     );

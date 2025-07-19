@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { addStudent } from "../../../api";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../AddBook.css"; 
 
 
 const AddStudent = () => {
   const [formData, setFormData] = useState({
-    Name: "",
-    PRN: "",
-    Department: "",
-    Email: ""
+    name: "",
+    prn: "",
+    department: "",
+    email: ""
   });
 
   const navigate = useNavigate();
@@ -22,7 +23,11 @@ const AddStudent = () => {
     e.preventDefault();
     try {
       await addStudent(formData);
-      alert("Student added successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Student added successfully!",
+        });
       navigate("/dashboard");
     } catch (error) {
       alert("Error adding book: " + error.message);
@@ -33,10 +38,10 @@ const AddStudent = () => {
     <div className="add-book-container">
       <h2 className="add-book-title">Add New Student</h2>
       <form className="add-book-form" onSubmit={handleSubmit}>
-        <input type="text" name="Name" className="form-input" placeholder="Student Name" onChange={handleChange} required />
-        <input type="text" name="PRN" className="form-input" placeholder="PRN" onChange={handleChange} required />
-        <input type="text" name="Department" className="form-input" placeholder="Department" onChange={handleChange} required />
-        <input type="email" name="Email" className="form-input" placeholder="College Email-id" onChange={handleChange} required />
+        <input type="text" name="name" className="form-input" placeholder="Student Name" onChange={handleChange} required />
+        <input type="text" name="prn" className="form-input" placeholder="PRN" onChange={handleChange} required />
+        <input type="text" name="department" className="form-input" placeholder="Department" onChange={handleChange} required />
+        <input type="email" name="email" className="form-input" placeholder="College Email-id" onChange={handleChange} required />
         
         <button type="submit" className="form-submit-btn">Add Student</button>
       </form>

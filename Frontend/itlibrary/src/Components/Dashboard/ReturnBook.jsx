@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { fetchIssuedBooksByPrn, returnBook } from '../../api';
+import Swa from 'sweetalert2';
 import './ReturnBook.css';
 
 export default function ReturnBook() {
@@ -9,7 +10,12 @@ export default function ReturnBook() {
 
     const handleFetchIssuedBooks = async () => {
         if (!prn) {
-            alert("Please enter a valid PRN.");
+           
+            Swa.fire({
+                icon: 'warning',
+                title: 'PRN Required',
+                text: 'Please enter a valid PRN number to fetch issued books.'
+            });
             return;
         }
         setLoading(true);
@@ -18,8 +24,13 @@ export default function ReturnBook() {
             const flatBooks = Array.isArray(books[0]) ? books[0] : books;
             setIssuedBooks(flatBooks);
         } catch (error) {
-            console.error("Failed to fetch issued books:", error);
-            alert("Error fetching issued books");
+            
+            
+            Swa.fire({
+                icon: 'error',
+                title: 'Fetch Failed',
+                text: error.response?.data?.message || "Failed to fetch issued books."
+            });
         } finally {
             setLoading(false);
         }
@@ -29,7 +40,12 @@ export default function ReturnBook() {
         if (window.confirm("Confirm return of this book?")) {
             try {
                 await returnBook(issueId);
-                alert("Book returned successfully!");
+                
+                Swa.fire({
+                    icon: 'success',
+                    title: 'Book Returned',
+                    text: `Book with Issue ID ${issueId} has been successfully returned.`
+                });
                 setIssuedBooks(prev => prev.filter(book => book.Issue_ID !== issueId));
             } catch (error) {
                 console.error("Error returning book:", error);

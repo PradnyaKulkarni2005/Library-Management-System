@@ -3,7 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, LabelList,
 } from 'recharts';
 import { getMostIssuedBooks } from '../../api';
-import './issued.css'; // Import CSS
+import './issued.css';
 
 const MostIssuedbook = () => {
   const [data, setData] = useState([]);
@@ -30,7 +30,7 @@ const MostIssuedbook = () => {
   if (error) return <p className="status-message error-message">Error: {error}</p>;
   if (!data.length) return <p className="status-message">No most issued books data available.</p>;
 
-  const sortedData = [...data].sort((a, b) => b.issue_count - a.issue_count).slice(0, 5);
+  const sortedData = [...data].sort((a, b) => b.count - a.count).slice(0, 5);
 
   return (
     <div className="most-issued-container">
@@ -44,7 +44,7 @@ const MostIssuedbook = () => {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
-              dataKey="Title"
+              dataKey="title"
               angle={-45}
               textAnchor="end"
               interval={0}
@@ -54,8 +54,8 @@ const MostIssuedbook = () => {
             <YAxis allowDecimals={false} />
             <Tooltip />
             <Legend />
-            <Bar dataKey="issue_count" fill="#8884d8" name="Issue Count" barSize={40}>
-              <LabelList dataKey="issue_count" position="top" />
+            <Bar dataKey="count" fill="#8884d8" name="Issue Count" barSize={40}>
+              <LabelList dataKey="count" position="top" />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

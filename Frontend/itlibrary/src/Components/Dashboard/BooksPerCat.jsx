@@ -10,7 +10,7 @@ const BooksPerCat = () => {
     const fetchData = async () => {
       try {
         const response = await getBooksPerCategory();
-        setCategories(response.categories);
+        setCategories(response);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
         setError("Failed to load book categories.");
@@ -28,11 +28,12 @@ const BooksPerCat = () => {
         <ul className="category-list">
   {categories.map((cat, index) => (
     <li key={index} className="category-item">
-      <strong>{cat.Category}</strong>
-      <span>{cat.bookCount} books</span>
+      <strong>{cat.category}</strong>
+      <span>{cat.count} books</span> 
     </li>
   ))}
 </ul>
+
 
       ) : (
         <p>Loading...</p>

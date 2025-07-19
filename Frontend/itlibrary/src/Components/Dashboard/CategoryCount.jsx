@@ -9,7 +9,7 @@ const CategoryCount = () => {
  useEffect(() => {
   const fetchCount = async () => {
     try {
-      const response = await getBookCategories(); // returns { count: 12 }
+      const response = await getBookCategories();
       console.log("Category count fetched successfully:", response.count);
       setCount(response.count); // ✅ FIXED
     } catch (err) {

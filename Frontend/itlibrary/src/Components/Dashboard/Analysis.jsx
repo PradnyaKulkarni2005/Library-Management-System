@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import { getBookStatusCounts } from '../../api';
-import './Analysis.css'; // Import the CSS
+import './Analysis.css'; 
 
 const COLORS = ['#0088FE', '#FF8042'];
 
@@ -14,8 +14,8 @@ export default function Analysis() {
             const counts = await getBookStatusCounts();
             console.log("Book status counts:", counts);
             const chartData = [
-    { name: 'Available', value: Number(counts.Available) },
-    { name: 'Issued', value: Number(counts.Issued) }
+    { name: 'Available', value: Number(counts.availableBooks) },
+    { name: 'Issued', value: Number(counts.issuedBooks) }
 ];
 
             setData(chartData);

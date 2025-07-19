@@ -35,10 +35,10 @@ export default function OverdueBooks() {
                     <tbody>
                         {overdueBooks.map((entry, index) => (
                             <tr key={index}>
-                                <td>{entry.Title}</td>
-                                <td>{entry.Category}</td>
-                                <td>{entry.StudentName}</td>
-                                <td>{entry.PRN}</td>
+                                <td>{entry.title}</td>
+                                <td>{entry.category}</td>
+                                <td>{entry.studentName}</td>
+                                <td>{entry.prn}</td>
                                 <td>{entry.DaysSinceIssue}</td>
                             </tr>
                         ))}

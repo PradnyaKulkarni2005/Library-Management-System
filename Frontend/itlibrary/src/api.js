@@ -70,7 +70,7 @@ export const deleteBook = async (bookId) => {
 export const issueBook = async (prn, bookId) => {
     try {
         const response = await axiosInstance.post('/book/issue', {
-            bookId: bookId, // ✅ change key from Book_ID to bookId
+            bookId: bookId, 
             prn: prn
         });
         console.log("Backend response:", response.data);

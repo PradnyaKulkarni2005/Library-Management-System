@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { updateBook, getBooks } from "../../api";
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditBook.css"; // Importing the CSS
+import "./EditBook.css";
 
 const EditBook = () => {
-  const { bookId } = useParams();
+  const { bookId } = useParams(); // bookId from URL
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    Book_ID: bookId,
-    Title: "",
-    Author: "",
-    Publication: "",
-    Available_Copies: "",
-    Total_Copies: "",
-    Category: "",
+    book_id: bookId,
+    isbn: "",
+    title: "",
+    author: "",
+    publication: "",
+    available_copies: "",
+    total_copies: "",
+    category: "",
+    originalIsbn: "",
   });
 
   useEffect(() => {
@@ -23,36 +26,55 @@ const EditBook = () => {
   const fetchBookDetails = async () => {
     try {
       const response = await getBooks();
-      console.log("API Response:", response);
 
-      if (!response || !response.book) {
-        console.error("Error: API response does not contain 'book' key.");
-        return;
-      }
+      const bookList = response?.data || response?.book || [];
+      const book = bookList.find((b) => String(b.book_id || b.Book_ID) === String(bookId));
 
-      const book = response.book.find((b) => b.Book_ID == bookId);
+      console.log("bookId from URL:", bookId);
+      console.log("bookList:", bookList);
+      console.log("matched book:", book);
+
       if (book) {
-        setFormData(book);
+        setFormData({
+          book_id: book.book_id,
+          isbn: book.isbn || "",
+          title: book.title || "",
+          author: book.author || "",
+          publication: book.publication || "",
+          available_copies: Number(book.available_copies ||  0),
+          total_copies: Number(book.total_copies || 0),
+          category: book.category ||  "",
+          originalIsbn: book.isbn ||  "",
+        });
       } else {
-        console.error("Error: Book not found in the list.");
+        console.error("Book not found");
       }
     } catch (error) {
-      console.error("Fetch Book Details Error:", error);
+      console.error("Error fetching book:", error);
     }
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.type === "number" ? Number(e.target.value) : e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateBook(formData);
+      const updatedData = { ...formData };
+      delete updatedData.book_id;
+
+      console.log("Submitting updateBook:", updatedData);
+
+      await updateBook(updatedData);
       alert("Book updated successfully!");
       navigate("/dashboard");
     } catch (error) {
-      alert("Error updating book: " + error.message);
+      console.error("Update error:", error);
+      alert("Error updating book: " + (error.response?.data?.error || error.message));
     }
   };
 
@@ -63,54 +85,63 @@ const EditBook = () => {
         <input
           className="form-input"
           type="text"
-          name="Title"
+          name="isbn"
+          placeholder="ISBN"
+          value={formData.isbn}
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="form-input"
+          type="text"
+          name="title"
           placeholder="Title"
-          value={formData.Title}
+          value={formData.title}
           onChange={handleChange}
           required
         />
         <input
           className="form-input"
           type="text"
-          name="Author"
+          name="author"
           placeholder="Author"
-          value={formData.Author}
+          value={formData.author}
           onChange={handleChange}
           required
         />
         <input
           className="form-input"
           type="text"
-          name="Publication"
+          name="publication"
           placeholder="Publication"
-          value={formData.Publication}
+          value={formData.publication}
           onChange={handleChange}
           required
         />
         <input
           className="form-input"
           type="number"
-          name="Available_Copies"
+          name="available_copies"
           placeholder="Available Copies"
-          value={formData.Available_Copies}
+          value={formData.available_copies}
           onChange={handleChange}
           required
         />
         <input
           className="form-input"
           type="number"
-          name="Total_Copies"
+          name="total_copies"
           placeholder="Total Copies"
-          value={formData.Total_Copies}
+          value={formData.total_copies}
           onChange={handleChange}
           required
         />
         <input
           className="form-input"
           type="text"
-          name="Category"
+          name="category"
           placeholder="Category"
-          value={formData.Category}
+          value={formData.category}
           onChange={handleChange}
           required
         />

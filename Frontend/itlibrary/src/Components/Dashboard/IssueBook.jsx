@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swa from 'sweetalert2';
 import { getBooks, issueBook } from '../../api';
 import './IssueBook.css';
 
@@ -6,7 +7,7 @@ export default function IssueBook() {
     const [prn, setprn] = useState('');
     const [showBooks, setShowBooks] = useState(false);
     const [books, setBooks] = useState([]);
-    const [searchQuery, setSearchQuery] = useState(""); // State for search query
+    const [searchQuery, setSearchQuery] = useState(""); 
 
     useEffect(() => {
         if (showBooks) {
@@ -25,26 +26,48 @@ export default function IssueBook() {
 
     const handleIssue = async (bookId) => {
         if (!prn) {
-            alert("Please enter student PRN number.");
+            
+            Swa.fire({
+                icon: 'warning',
+                title: 'PRN Required',
+                text: 'Please enter a valid PRN number to issue a book.'
+            });
             return;
         }
 
         try {
             await issueBook(prn, bookId);
-            alert(`Book ID ${bookId} issued to PRN No ${prn}`);
+            console.log('Request sent');
+           
+            Swa.fire({
+                icon: 'success',
+                title: 'Book Issued',
+                text: `Book ID ${bookId} has been successfully issued to PRN No ${prn}.`
+            });
             setShowBooks(false);
         } catch (error) {
             const msg = error.response?.data?.message || "Failed to issue book.";
             alert(msg);
+            Swa.fire({
+                icon: 'error',
+                title: 'Issue Failed',
+                text: msg
+            }); 
         }
     };
 
     // Filter books based on search query
-    const filteredBooks = books.filter(book =>
-        book.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.Author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.Category.toLowerCase().includes(searchQuery.toLowerCase())
+const filteredBooks = searchQuery.trim() === ""
+    ? books
+    : books.filter(book =>
+        (book.title?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+        (book.author?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+        (book.category?.toLowerCase() || "").includes(searchQuery.toLowerCase())
     );
+
+
+
+
 
     return (
         <div className="issue-book-container">
@@ -92,22 +115,23 @@ export default function IssueBook() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredBooks.map(book => (
-                                <tr key={book.Book_ID}>
-                                    <td>{book.Book_ID}</td>
-                                    <td>{book.Title}</td>
-                                    <td>{book.Author}</td>
-                                    <td>{book.Category}</td>
-                                    <td>
-                                        <button 
-                                            className="issue-btn"
-                                            onClick={() => handleIssue(book.Book_ID)}
-                                        >
-                                            Issue
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {filteredBooks.map((book, index) => (
+    <tr key={book.Book_ID || book.book_id || index}>
+        <td>{book.Book_ID || book.book_id}</td>
+        <td>{book.title}</td>
+        <td>{book.author}</td>
+        <td>{book.category}</td>
+        <td>
+            <button 
+                className="issue-btn"
+                onClick={() => handleIssue(book.Book_ID || book.book_id)}
+            >
+                Issue
+            </button>
+        </td>
+    </tr>
+))}
+
                         </tbody>
                     </table>
                 </div>
