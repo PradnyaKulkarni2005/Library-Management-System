@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faBookOpen, faPlus, faEdit, faArrowCircleUp, faUndo, 
+  faUserPlus, faUserEdit, faClock, faChartBar, faStar, faFileAlt 
+} from '@fortawesome/free-solid-svg-icons';
+
 import AvailableBooks from './AvailableBooks';
 import AddBook from './AddBook';
 import Editbook from './Editbook';
@@ -50,20 +56,44 @@ const DashboardLayout = () => {
     return (
         <div className="dashboard-wrapper">
             <aside className="sidebar">
-                <button onClick={() => setActiveTab('available')}>Available Books</button>
-                <button onClick={() => setActiveTab('add')}>Add Book</button>
-                <button onClick={() => setActiveTab('update')}>Update Book</button>
-                <button onClick={() => setActiveTab('issued')}>Issue Book</button>
-                <button onClick={() => setActiveTab('return')}>Return Book</button>
-                <button onClick={() => setActiveTab('addstd')}>Add Student</button>
-                <button onClick={() => setActiveTab('updatestd')}>Update Student Details</button>
-                <button onClick={() => setActiveTab('pending')}>Books Pending Return</button>
-                <button onClick={() => setActiveTab('analysis')}>Analysis</button>
-                <button onClick={() => setActiveTab('mostissued')}>Most Issued Books</button>
-                <button onClick={() => setActiveTab('report')}>Admin Report</button>
-                
+  <div className="sidebar-title">Library Dashboard</div>
+  <div className="menu">
+    <div className={`menu-item ${activeTab === 'available' ? 'active' : ''}`} onClick={() => setActiveTab('available')}>
+      <FontAwesomeIcon icon={faBookOpen} /> Available Books
+    </div>
+    <div className={`menu-item ${activeTab === 'add' ? 'active' : ''}`} onClick={() => setActiveTab('add')}>
+      <FontAwesomeIcon icon={faPlus} /> Add Book
+    </div>
+    <div className={`menu-item ${activeTab === 'update' ? 'active' : ''}`} onClick={() => setActiveTab('update')}>
+      <FontAwesomeIcon icon={faEdit} /> Update Book
+    </div>
+    <div className={`menu-item ${activeTab === 'issued' ? 'active' : ''}`} onClick={() => setActiveTab('issued')}>
+      <FontAwesomeIcon icon={faArrowCircleUp} /> Issue Book
+    </div>
+    <div className={`menu-item ${activeTab === 'return' ? 'active' : ''}`} onClick={() => setActiveTab('return')}>
+      <FontAwesomeIcon icon={faUndo} /> Return Book
+    </div>
+    <div className={`menu-item ${activeTab === 'addstd' ? 'active' : ''}`} onClick={() => setActiveTab('addstd')}>
+      <FontAwesomeIcon icon={faUserPlus} /> Add Student
+    </div>
+    <div className={`menu-item ${activeTab === 'updatestd' ? 'active' : ''}`} onClick={() => setActiveTab('updatestd')}>
+      <FontAwesomeIcon icon={faUserEdit} /> Update Student
+    </div>
+    <div className={`menu-item ${activeTab === 'pending' ? 'active' : ''}`} onClick={() => setActiveTab('pending')}>
+      <FontAwesomeIcon icon={faClock} /> Pending Returns
+    </div>
+    <div className={`menu-item ${activeTab === 'analysis' ? 'active' : ''}`} onClick={() => setActiveTab('analysis')}>
+      <FontAwesomeIcon icon={faChartBar} /> Analysis
+    </div>
+    <div className={`menu-item ${activeTab === 'mostissued' ? 'active' : ''}`} onClick={() => setActiveTab('mostissued')}>
+      <FontAwesomeIcon icon={faStar} /> Most Issued
+    </div>
+    <div className={`menu-item ${activeTab === 'report' ? 'active' : ''}`} onClick={() => setActiveTab('report')}>
+      <FontAwesomeIcon icon={faFileAlt} /> Admin Report
+    </div>
+  </div>
+</aside>
 
-            </aside>
             <main className="main-content">
                 {renderSection()}
             </main>

@@ -1,22 +1,46 @@
-/* Main container for the Available Books UI */
+/* Main container for Available Books section */
 .available-books {
     max-width: 1000px;
     margin: 40px auto;
-    padding: 30px;
+    padding: 40px;
     background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     color: #333;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: scaleUp 0.6s ease;
 }
 
-/* Heading style */
+/* Heading */
 .available-books h2 {
     text-align: center;
-    color: #224772;
-    margin-bottom: 25px;
-    font-size: 28px;
+    color: #003366;
+    margin-bottom: 30px;
+    font-size: 30px;
     font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Search bar styling */
+.search-input {
+    display: block;
+    margin: 0 auto 30px auto;
+    width: 100%;
+    max-width: 420px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.search-input:focus {
+    border-color: #004aad;
+    box-shadow: 0 0 8px rgba(0, 74, 173, 0.3);
+    background-color: #fff;
+    outline: none;
 }
 
 /* Table container */
@@ -24,76 +48,73 @@
     overflow-x: auto;
 }
 
-/* Table styles */
+/* Table Styles */
 .book-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Table header styles */
+/* Table header */
 .book-table thead {
     background-color: #00b0f0;
     color: #ffffff;
     text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .book-table th,
 .book-table td {
-    padding: 12px;
+    padding: 14px 18px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e6e6e6;
+    font-size: 15px;
 }
 
 /* Row hover effect */
 .book-table tbody tr:hover {
-    background-color: #f1f9ff;
-}
-
-/* Delete button styles */
-.book-table td button {
-    padding: 6px 12px;
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #f0f6ff;
     transition: background-color 0.3s ease;
 }
 
+/* Delete button */
+.book-table td button {
+    padding: 8px 14px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
 .book-table td button:hover {
-    background-color: #c82333;
+    background-color: #c0392b;
+    transform: scale(1.05);
 }
 
-/* SearchInput.css */
-.search-input {
-    width: 100%;
-    max-width: 400px;
-    padding: 12px 16px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    outline: none;
-    transition: all 0.3s ease;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-.search-input:focus {
-    border-color: #4b0082;
-    box-shadow: 0 0 8px rgba(75, 0, 130, 0.2);
-    background-color: #fff;
+/* Animations */
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* Responsive Design */
-
-/* Tablets */
 @media (max-width: 768px) {
     .available-books {
-        padding: 20px;
+        padding: 25px;
         margin: 20px;
     }
 
@@ -111,13 +132,16 @@
         max-width: 100%;
         font-size: 15px;
     }
+
+    .book-table td button {
+        padding: 6px 12px;
+    }
 }
 
-/* Small devices (phones) */
 @media (max-width: 480px) {
     .available-books {
-        padding: 15px;
-        margin: 10px;
+        padding: 20px;
+        margin: 15px;
     }
 
     .available-books h2 {

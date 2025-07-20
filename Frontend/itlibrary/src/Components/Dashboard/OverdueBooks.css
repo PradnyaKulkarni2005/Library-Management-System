@@ -1,0 +1,115 @@
+.overdue-books {
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.8s ease;
+}
+
+.overdue-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: scaleUp 0.6s ease;
+}
+
+.overdue-card h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 30px;
+}
+
+.overdue-card .highlight {
+    color: #e74c3c;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+}
+
+.book-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.book-table thead {
+    background-color: #00b0f0;
+    color: white;
+    text-transform: uppercase;
+}
+
+.book-table th,
+.book-table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+    font-size: 15px;
+}
+
+.book-table tbody tr:hover {
+    background-color: #f0f6ff;
+    transition: background-color 0.3s ease;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+    margin-top: 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .overdue-card {
+        padding: 25px;
+    }
+
+    .overdue-card h2 {
+        font-size: 24px;
+    }
+
+    .book-table th,
+    .book-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overdue-card {
+        padding: 20px;
+    }
+
+    .overdue-card h2 {
+        font-size: 20px;
+    }
+
+    .book-table th,
+    .book-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .no-data {
+        font-size: 14px;
+    }
+}

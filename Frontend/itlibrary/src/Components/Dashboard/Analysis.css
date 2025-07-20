@@ -1,60 +1,75 @@
-
 .analysis-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f4ff, #e4e8f5);
+  background: linear-gradient(135deg, #f0f6ff, #e4edff);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
+  padding: 40px 20px;
   box-sizing: border-box;
+  animation: fadeIn 0.8s ease;
 }
 
 .analysis-heading {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #1e3a8a;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #003366;
   text-align: center;
+  letter-spacing: 0.5px;
 }
 
+/* Chart container with visual card styling */
 .chart-wrapper {
   background-color: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-  width: 80%;
-  max-width: 800px;
-  display: flex;              /* Add flex to center chart inside */
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Optional: smoother scale on hover */
 .chart-wrapper:hover {
   transform: scale(1.02);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive styles */
+/* Make tooltip font consistent */
+.recharts-default-tooltip {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .analysis-heading {
     font-size: 24px;
+    margin-bottom: 20px;
   }
 
   .chart-wrapper {
-    padding: 20px;
-    width: 90%;
+    padding: 25px;
   }
 }
 
 @media (max-width: 480px) {
   .analysis-heading {
     font-size: 20px;
+    margin-bottom: 16px;
   }
 
   .chart-wrapper {
-    padding: 15px;
-    width: 100%;
+    padding: 20px;
   }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

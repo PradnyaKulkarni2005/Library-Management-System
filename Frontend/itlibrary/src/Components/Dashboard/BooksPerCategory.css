@@ -9,6 +9,7 @@
   }
 }
 
+/* Base Container */
 .category-list-box {
   max-width: 600px;
   margin: 2rem auto;
@@ -24,6 +25,7 @@
   transform: scale(1.01);
 }
 
+/* Title */
 .category-title {
   font-size: 2rem;
   font-weight: 700;
@@ -43,6 +45,7 @@
   border-radius: 2px;
 }
 
+/* List Items */
 .category-list {
   list-style: none;
   padding: 0;
@@ -78,6 +81,7 @@
 .category-item strong {
   font-weight: 600;
   color: #333;
+  font-size: 1.1rem;
 }
 
 .category-item span {
@@ -86,23 +90,21 @@
   font-weight: 600;
 }
 
-/* ================================
-   ✅ Improved Responsive Styles
-   ================================ */
-@media (max-width: 600px) {
+/* ============================
+   ✅ Responsive Adjustments
+   ============================ */
+@media (max-width: 768px) {
   .category-list-box {
-    padding: 1.25rem;
-    margin: 1.5rem 1rem;
+    padding: 1.5rem;
+    margin: 1.5rem;
   }
 
   .category-title {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
   .category-item {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     gap: 0.5rem;
   }
 
@@ -112,7 +114,31 @@
 
   .category-item span {
     font-size: 0.95rem;
-    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-list-box {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .category-title {
+    font-size: 1.4rem;
+  }
+
+  .category-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .category-item span {
     align-self: flex-end;
+    font-size: 0.9rem;
+  }
+
+  .category-item strong {
+    font-size: 0.95rem;
   }
 }
