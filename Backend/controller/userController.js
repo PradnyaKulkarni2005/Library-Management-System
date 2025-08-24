@@ -1,6 +1,5 @@
 import supabase from '../config/db.js';
-
-
+import ExcelJS from "exceljs";
 //  Get all students (using async/await)
 export const getStudents = async (req, res) => {
     try {
@@ -73,3 +72,49 @@ export const deleteStudent = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+// feature to upload excel sheet to add students directly in the users table
+
+export const uploadBooksExcel = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(req.file.buffer);
+
+    const worksheet = workbook.worksheets[0];
+    const rows = [];
+    const headers = worksheet.getRow(1).values.map(v => v && v.toString().trim());
+
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber === 1) return; // skip header row
+      const obj = {};
+      row.values.forEach((value, i) => {
+        const key = headers[i];
+        if (key) obj[key] = value;
+      });
+      rows.push(obj);
+    });
+
+    if (!rows.length) return res.status(400).json({ error: "Excel file is empty" });
+
+    const required = ["isbn", "title", "author"];
+    for (const row of rows) {
+      for (const field of required) {
+        if (!row[field]) return res.status(400).json({ error: `Missing field '${field}'` });
+      }
+    }
+
+    const chunkSize = 1000;
+    for (let i = 0; i < rows.length; i += chunkSize) {
+      const chunk = rows.slice(i, i + chunkSize);
+      const { error } = await supabase.from("book").insert(chunk);
+      if (error) return res.status(400).json({ error: error.message });
+    }
+
+    res.json({ status: "success", inserted: rows.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
