@@ -183,3 +183,15 @@ export const getBooksPerCategory = async () => {
     throw error;
   }
 };
+
+// Upload Excel for books
+export const uploadBooksExcel = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await axiosInstance.post("/books/upload-excel", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+  return res.data;
+};

@@ -18,6 +18,7 @@ import Analysis from './Analysis';
 import MostIssuedbook from './MostIssuedbook';  
 import './Dashboard.css';
 import AdminReport from './AdminReport';
+import ExcelUpload from './Student/ExcelUpload'
 
 const DashboardLayout = () => {
     const [activeTab, setActiveTab] = useState('available');
@@ -36,9 +37,11 @@ const DashboardLayout = () => {
                 return <ReturnBook />;
             case 'analysis':
                 return <Analysis />;
-                
+            case 'upload':
+                return <ExcelUpload/>   
             case 'addstd':
                 return <AddStudent />;
+
             case 'updatestd':
                 return <UpdateStudent />;
             case 'report':
@@ -72,6 +75,9 @@ const DashboardLayout = () => {
     </div>
     <div className={`menu-item ${activeTab === 'return' ? 'active' : ''}`} onClick={() => setActiveTab('return')}>
       <FontAwesomeIcon icon={faUndo} /> Return Book
+    </div>
+    <div className={`menu-item ${activeTab === 'upload' ? 'active' : ''}`} onClick={() => setActiveTab('upload')}>
+      <FontAwesomeIcon icon={faUserPlus} /> Student Excel Upload
     </div>
     <div className={`menu-item ${activeTab === 'addstd' ? 'active' : ''}`} onClick={() => setActiveTab('addstd')}>
       <FontAwesomeIcon icon={faUserPlus} /> Add Student

@@ -1,0 +1,60 @@
+.excel-upload {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: Arial, sans-serif;
+}
+
+.excel-upload h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #1f2937;
+}
+
+.excel-upload input[type="file"] {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+.excel-upload button {
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.excel-upload button.upload {
+  background-color: #2563eb;
+  color: white;
+}
+
+.excel-upload button.upload:hover {
+  background-color: #1e40af;
+}
+
+.excel-upload button.disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.excel-upload p.message {
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+
+.excel-upload p.message.success {
+  color: #16a34a;
+}
+
+.excel-upload p.message.error {
+  color: #dc2626;
+}
