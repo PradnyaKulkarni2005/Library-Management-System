@@ -77,7 +77,7 @@ const DashboardLayout = () => {
       <FontAwesomeIcon icon={faUndo} /> Return Book
     </div>
     <div className={`menu-item ${activeTab === 'upload' ? 'active' : ''}`} onClick={() => setActiveTab('upload')}>
-      <FontAwesomeIcon icon={faUserPlus} /> Student Excel Upload
+      <FontAwesomeIcon icon={faUserPlus} /> Student & Book Excel Upload
     </div>
     <div className={`menu-item ${activeTab === 'addstd' ? 'active' : ''}`} onClick={() => setActiveTab('addstd')}>
       <FontAwesomeIcon icon={faUserPlus} /> Add Student

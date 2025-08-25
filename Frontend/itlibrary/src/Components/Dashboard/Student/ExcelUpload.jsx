@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { uploadBooksExcel } from "../../../api";
+import { uploadBooksExcel, uploadStudentsExcel } from "../../../api";
 import "./ExcelUpload.css";
+import Swal from "sweetalert2";
 
 export default function ExcelUpload() {
   const [file, setFile] = useState(null);
+  const [uploadType, setUploadType] = useState("books"); // default option
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -23,8 +25,24 @@ export default function ExcelUpload() {
 
     setLoading(true);
     try {
-      const res = await uploadBooksExcel(file);
-      setMessage(`✅ Inserted ${res.inserted} books successfully`);
+      let res;
+      if (uploadType === "books") {
+        res = await uploadBooksExcel(file);
+        Swal.fire({
+          icon: 'success',
+          title: 'Books Uploaded',
+          text: `✅ Inserted ${res.inserted} books successfully`,
+        });
+        
+      } else {
+        res = await uploadStudentsExcel(file);
+          Swal.fire({
+            icon: 'success',
+            title: 'Students Uploaded',
+            text: `✅ Inserted ${res.inserted} students successfully`,
+          });
+        
+      }
       setError(false);
     } catch (err) {
       setMessage(`❌ ${err.response?.data?.error || err.message}`);
@@ -36,12 +54,25 @@ export default function ExcelUpload() {
 
   return (
     <div className="excel-upload">
-      <h2>Upload Books Excel</h2>
+      <h2>Upload Excel</h2>
+
+    
+      <label htmlFor="uploadType">Choose upload type:</label>
+      <select
+        id="uploadType"
+        value={uploadType}
+        onChange={(e) => setUploadType(e.target.value)}
+      >
+        <option value="books">Books</option>
+        <option value="students">Students</option>
+      </select>
+
       <input
         type="file"
         accept=".xlsx,.xls"
         onChange={handleChange}
       />
+
       <button
         onClick={handleUpload}
         disabled={loading}
@@ -49,6 +80,7 @@ export default function ExcelUpload() {
       >
         {loading ? "Uploading..." : "Upload"}
       </button>
+
       {message && (
         <p className={`message ${error ? "error" : "success"}`}>{message}</p>
       )}

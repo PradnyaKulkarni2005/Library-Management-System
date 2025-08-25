@@ -188,10 +188,24 @@ export const getBooksPerCategory = async () => {
 export const uploadBooksExcel = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
-
-  const res = await axiosInstance.post("/books/upload-excel", formData, {
+    console.log("FormData file:", formData.get("file"));
+  const res = await axiosInstance.post("/student/upload-excelbook", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+
+  console.log("Upload Excel Response:", res.data);
+  return res.data;
+};
+// Upload Excel for students
+export const uploadStudentsExcel = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  console.log("FormData prepared with file:", file.name);
+
+  const res = await axiosInstance.post("/student/upload-excel", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  console.log("Upload response:", res.data);
 
   return res.data;
 };

@@ -1,60 +1,84 @@
 .excel-upload {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 24px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
   background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: Arial, sans-serif;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: all 0.3s ease-in-out;
 }
 
 .excel-upload h2 {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 16px;
-  color: #1f2937;
-}
-
-.excel-upload input[type="file"] {
-  display: block;
-  margin-bottom: 16px;
-  font-size: 0.95rem;
-}
-
-.excel-upload button {
-  padding: 10px 16px;
-  font-size: 0.95rem;
+  text-align: center;
+  font-size: 1.8rem;
   font-weight: 600;
+  color: #2d3748;
+}
+
+.excel-upload label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin-bottom: 0.3rem;
+}
+
+.excel-upload select,
+.excel-upload input[type="file"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
-  border: none;
+  background: #f9fafb;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
   cursor: pointer;
-  transition: all 0.2s ease;
+}
+
+.excel-upload select:hover,
+.excel-upload input[type="file"]:hover {
+  border-color: #4299e1;
+  background: #ffffff;
 }
 
 .excel-upload button.upload {
-  background-color: #2563eb;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4299e1, #3182ce);
   color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.excel-upload button.upload:hover {
-  background-color: #1e40af;
+.excel-upload button.upload:hover:not(.disabled) {
+  background: linear-gradient(135deg, #3182ce, #2b6cb0);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
-.excel-upload button.disabled {
-  background-color: #9ca3af;
+.excel-upload button.upload.disabled {
+  background: #a0aec0;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.excel-upload p.message {
-  margin-top: 16px;
-  font-size: 0.9rem;
-}
+/* ✅ Responsive design */
+@media (max-width: 600px) {
+  .excel-upload {
+    padding: 1.5rem;
+    margin: 1rem;
+    gap: 1rem;
+  }
 
-.excel-upload p.message.success {
-  color: #16a34a;
-}
-
-.excel-upload p.message.error {
-  color: #dc2626;
+  .excel-upload h2 {
+    font-size: 1.5rem;
+  }
 }
