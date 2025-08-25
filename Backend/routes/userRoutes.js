@@ -12,5 +12,18 @@ router.post('/update', userController.updateStudent);
 router.delete('/delete/:PRN', userController.deleteStudent);
 // // Get student by PRN
 // router.get('/get/:PRN', userController.getStudentByPRN);
+import multer from 'multer';
+const upload = multer({ storage: multer.memoryStorage() });
+router.post(
 
+  '/upload-excelbook',
+  upload.single('file'),
+  userController.uploadBooksExcel
+);
+
+router.post(
+  "/upload-excel",
+  upload.single("file"),
+  userController.uploadStudentsExcel
+);
 export default router;

@@ -117,4 +117,69 @@ export const uploadBooksExcel = async (req, res) => {
   }
 };
 
+// upload students excel file to add students in the users table
+export const uploadStudentsExcel = async (req, res) => {
+  // Parse and validate Excel file
+  try {
+    if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+// created workbook instance
+    const workbook = new ExcelJS.Workbook();
+    // load the uploaded file buffer
+    await workbook.xlsx.load(req.file.buffer);
+// access the first worksheet
+    const worksheet = workbook.worksheets[0];
+    const rows = [];
 
+    // Get headers (row 1)
+  
+    const headers = worksheet.getRow(1).values.map((v) =>
+      v && v.toString().trim().toLowerCase()
+    );
+// iterate through each row
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber === 1) return; // skip header row
+      const obj = {};
+// map each cell to corresponding header
+      row.values.forEach((value, i) => {
+        if (!headers[i]) return;
+        let cellValue = value;
+
+        // Normalize ExcelJS hyperlink objects
+        if (typeof cellValue === "object" && cellValue?.text) {
+          cellValue = cellValue.text;
+        }
+// trim whitespace and convert to string
+        obj[headers[i]] = cellValue ? cellValue.toString().trim() : null;
+      });
+
+      rows.push(obj);
+    });
+
+    if (!rows.length) return res.status(400).json({ error: "Excel file is empty" });
+
+    // Validate required fields
+    const required = ["prn", "name", "email"];
+    // Check each row for required fields
+    for (const row of rows) {
+      for (const field of required) {
+        if (!row[field]) {
+          return res.status(400).json({ error: `Missing field '${field}'` });
+        }
+      }
+    }
+
+    // Insert in chunks
+    const chunkSize = 1000;
+    // Loop through rows in chunks to avoid large inserts
+    for (let i = 0; i < rows.length; i += chunkSize) {
+      const chunk = rows.slice(i, i + chunkSize);
+      const { error } = await supabase.from("users").insert(chunk);
+      if (error) return res.status(400).json({ error: error.message });
+    }
+
+    res.json({ status: "success", inserted: rows.length });
+  } catch (err) {
+    console.error("Upload Error:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
